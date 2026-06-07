@@ -1,0 +1,238 @@
+@media (max-width: 760px) {
+  .reader-shell {
+    min-height: 100dvh;
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: 0.45rem;
+    padding: 0.45rem 0.45rem 0.7rem;
+  }
+
+  .reader-toolbar {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(2rem, 1fr));
+    gap: 0.25rem;
+    justify-content: stretch;
+    overflow: hidden;
+    border-radius: 8px;
+    padding: 0.35rem;
+  }
+
+  .toolbar-divider {
+    display: none;
+  }
+
+  .icon-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.3rem;
+  }
+
+  .icon-button span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .reader-stats {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0.28rem 0.55rem;
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
+  .book-wrap {
+    align-self: start;
+    align-items: start;
+    transform-origin: top center;
+    touch-action: pan-y;
+  }
+
+  .book-pan-surface,
+  .book-flipper-shell {
+    width: 100%;
+    transform-origin: top center;
+    touch-action: pan-y;
+  }
+
+  .book-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    width: min(100%, 24rem);
+    min-height: auto;
+    gap: 0.45rem;
+    padding: 0.55rem;
+  }
+
+  .book-page::after {
+    inset: 0.25rem;
+  }
+
+  .page-gutter {
+    display: none;
+  }
+
+  .page-hero {
+    order: 1;
+    height: clamp(14rem, 39dvh, 19.5rem);
+    min-height: auto;
+    padding: 0.35rem;
+  }
+
+  .page-asset {
+    width: 100%;
+    height: 100%;
+    border-width: 0.28rem;
+  }
+
+  .accent-strip {
+    right: 0.5rem;
+    top: 0.5rem;
+    padding: 0.22rem;
+  }
+
+  .accent-strip img {
+    width: clamp(3rem, 13vw, 4.1rem);
+  }
+
+  .page-marker {
+    left: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.32rem 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  .page-copy {
+    order: 2;
+    gap: 0.32rem;
+  }
+
+  .series-kicker,
+  .page-tone,
+  .page-copy h1,
+  .page-copy .focus-line,
+  .page-copy .decision-recap,
+  .story-body {
+    display: none;
+  }
+
+  h2 {
+    font-size: clamp(1.05rem, 5.2vw, 1.38rem);
+    line-height: 1.18;
+  }
+
+  .mobile-scene-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    align-items: stretch;
+  }
+
+  .mobile-scene-card {
+    min-height: 6.25rem;
+    padding: 0.58rem 0.68rem;
+    display: grid;
+    align-content: center;
+    gap: 0.2rem;
+    background:
+      linear-gradient(90deg, rgba(255, 248, 221, 0.92), rgba(255, 233, 169, 0.76)),
+      rgba(255, 244, 207, 0.86);
+    border-left: 0.28rem solid #d0822f;
+    box-shadow: inset 0 0 0 1px rgba(92, 57, 30, 0.14);
+  }
+
+  .mobile-scene-index {
+    margin: 0;
+    color: #8c4f24;
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .mobile-scene-step {
+    margin: 0;
+    color: #2d2117;
+    font-size: 0.96rem;
+    font-weight: 900;
+    line-height: 1.42;
+    white-space: pre-line;
+    word-break: keep-all;
+  }
+
+  .mobile-scene-next {
+    min-width: 4.85rem;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid rgba(255, 244, 207, 0.36);
+    color: #fff8de;
+    background: linear-gradient(135deg, #6d2f24, #0d5158);
+    box-shadow: 0 0.6rem 1.1rem rgba(46, 25, 16, 0.18);
+    font-size: 0.82rem;
+    font-weight: 900;
+    touch-action: manipulation;
+  }
+
+  .choice-panel {
+    order: 3;
+    gap: 0.38rem;
+  }
+
+  .choice-button {
+    min-height: 2.85rem;
+    padding: 0.58rem 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.24;
+  }
+}
+
+.tactile-flip-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.025;
+  pointer-events: none;
+  transform: translate(0.55rem, 0.65rem) rotate(0.18deg);
+  filter: drop-shadow(0 0.9rem 1.1rem rgba(0, 0, 0, 0.22));
+}
+
+.tactile-flip-page {
+  width: 100%;
+  height: 100%;
+  padding: 1.2rem;
+  display: grid;
+  align-content: end;
+  border: 1px solid rgba(92, 57, 30, 0.3);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(91, 59, 32, 0.2), transparent 16%),
+    radial-gradient(circle at 55% 18%, rgba(255, 255, 255, 0.58), transparent 14rem), #efd7a7;
+}
+
+.tactile-flip-page img {
+  width: min(12rem, 68%);
+  aspect-ratio: 1;
+  place-self: center;
+  object-fit: cover;
+  border: 0.35rem solid rgba(53, 32, 20, 0.62);
+  filter: sepia(0.26) contrast(0.9);
+}
+
+.tactile-flip-page span {
+  color: #76502c;
+  font-weight: 900;
+  text-align: center;
+}
+
+.tactile-flip-page-back {
+  place-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+  }
+}

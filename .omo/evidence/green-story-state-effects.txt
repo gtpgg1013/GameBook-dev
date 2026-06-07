@@ -1,0 +1,13 @@
+
+> baguette-hero-gamebook@0.1.0 validate:story
+> vitest run tests/story-graph.test.ts
+
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  01:27:39
+   Duration  821ms (transform 65ms, setup 72ms, import 60ms, tests 7ms, environment 568ms)
+

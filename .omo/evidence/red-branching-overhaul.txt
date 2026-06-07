@@ -1,0 +1,37 @@
+
+> baguette-hero-gamebook@0.1.0 validate:story
+> vitest run tests/story-graph.test.ts
+
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+ ❯ tests/story-graph.test.ts (6 tests | 1 failed) 12ms
+     × makes every story page a real branching choice point 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/story-graph.test.ts > story graph contract > makes every story page a real branching choice point
+AssertionError: story pages with fewer than 2 choices: expected [ { kind: 'story', …(7) }, …(145) ] to have a length of +0 but got 146
+
+- Expected
++ Received
+
+- 0
++ 146
+
+ ❯ tests/story-graph.test.ts:47:77
+     45|     )
+     46|
+     47|     expect(pagesWithTooFewChoices, "story pages with fewer than 2 choi…
+       |                                                                             ^
+     48|     expect(pagesWithDuplicateTargets, "story pages with duplicate choi…
+     49|     expect(nonLinearChoices.length, "non-linear branch choices").toBeG…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  02:40:42
+   Duration  679ms (transform 44ms, setup 61ms, import 38ms, tests 12ms, environment 452ms)
+

@@ -1,0 +1,5 @@
+Directory: /Users/gkk/Documents/GameBook
+Extension: .ts
+Files scanned: 18
+Files with errors: 0
+Total diagnostics: 0

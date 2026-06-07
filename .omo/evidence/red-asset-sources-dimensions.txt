@@ -1,0 +1,2493 @@
+$ vitest run tests/asset-manifest.test.ts
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+ ❯ tests/asset-manifest.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/asset-manifest.test.ts [ tests/asset-manifest.test.ts ]
+ZodError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      0,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      1,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      2,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      3,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      4,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      5,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      6,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      7,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      8,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      9,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      10,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      11,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      12,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      13,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      14,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      15,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      16,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      17,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      18,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      19,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      20,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      21,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      22,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      23,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      24,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      25,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      26,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      27,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      28,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      29,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      30,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      31,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      32,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      33,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      34,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      35,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      36,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      37,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      38,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      39,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      40,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      41,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      42,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      43,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      44,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      45,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      46,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      47,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      48,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      49,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      50,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      51,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      52,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      53,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      54,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      55,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      56,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      57,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      58,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      59,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      60,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      61,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      62,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      63,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      64,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      65,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      66,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      67,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      68,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      69,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      70,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      71,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      72,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      73,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      74,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      75,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      76,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      77,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      78,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      79,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      80,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      81,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      82,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      83,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      84,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      85,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      86,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      87,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      88,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      89,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      90,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      91,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      92,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      93,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      94,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      95,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      96,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      97,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      98,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      99,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      100,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      101,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      102,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      103,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      104,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      105,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      106,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      107,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      108,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      109,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      110,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      111,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      112,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      113,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      114,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      115,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      116,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      117,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      118,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      119,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      120,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      121,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      122,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      123,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      124,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      125,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      126,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      127,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      128,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      129,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      130,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      131,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      132,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      133,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      134,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      135,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      136,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      137,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      138,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      139,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      140,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      141,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      142,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      143,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      144,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      145,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      146,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      147,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      148,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      149,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      150,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      151,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      152,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      153,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      154,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      155,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      156,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      157,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      158,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      159,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      160,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      161,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      162,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      163,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      164,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      165,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      166,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      167,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      168,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      169,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      170,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      171,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      172,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      173,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      174,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      175,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      176,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      177,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      178,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      179,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      180,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      181,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      182,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      183,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      184,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      185,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      186,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      187,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      188,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      189,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      190,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      191,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      192,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      193,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      194,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      195,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      196,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      197,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      198,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      199,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      200,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      201,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      202,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      203,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      204,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      205,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      206,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      207,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      208,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      209,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      210,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      211,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      212,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      213,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      214,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      215,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      216,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      217,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      218,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      219,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      220,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      221,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      222,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "sharp-contact-sheet-slice"
+    ],
+    "path": [
+      223,
+      "derivedBy"
+    ],
+    "message": "Invalid input: expected \"sharp-contact-sheet-slice\""
+  }
+]
+ ❯ src/assets/manifest.ts:29:80
+     27| export type GeneratedAsset = z.infer<typeof assetSchema>
+     28|
+     29| export const generatedAssets: readonly GeneratedAsset[] = z.array(asse…
+       |                                                                                ^
+     30|
+     31| export function assetById(id: string): GeneratedAsset {
+ ❯ tests/asset-manifest.test.ts:4:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  00:51:17
+   Duration  321ms (transform 24ms, setup 34ms, import 0ms, tests 0ms, environment 187ms)
+
+error: script "validate:assets" exited with code 1

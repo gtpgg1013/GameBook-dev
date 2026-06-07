@@ -1,0 +1,13 @@
+
+> baguette-hero-gamebook@0.1.0 validate:assets
+> vitest run tests/asset-manifest.test.ts
+
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  01:27:38
+   Duration  874ms (transform 78ms, setup 91ms, import 122ms, tests 10ms, environment 550ms)
+

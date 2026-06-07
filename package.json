@@ -1,0 +1,53 @@
+{
+  "name": "baguette-hero-gamebook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:ui": "vitest run tests/gamebook-ui.test.tsx",
+    "test:unit": "vitest run tests/story-graph.test.ts tests/asset-manifest.test.ts tests/gamebook-ui.test.tsx",
+    "test:e2e": "playwright test",
+    "validate:story": "vitest run tests/story-graph.test.ts",
+    "validate:assets": "vitest run tests/asset-manifest.test.ts",
+    "qa:browser": "tsx scripts/qa-browser.ts",
+    "format": "biome check --write .",
+    "assets:build": "tsx scripts/slice-assets.ts",
+    "check": "biome check . && tsc --noEmit && vitest run"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.101.0",
+    "@tanstack/react-router": "1.170.15",
+    "howler": "2.2.4",
+    "lucide-react": "1.17.0",
+    "motion": "12.40.0",
+    "page-flip": "2.0.7",
+    "panzoom": "9.4.4",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-pageflip": "2.0.3",
+    "zod": "4.4.3",
+    "zustand": "5.0.14"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.16",
+    "@playwright/test": "1.60.0",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/howler": "2.2.13",
+    "@types/node": "24.10.2",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "jsdom": "29.1.1",
+    "sharp": "0.34.5",
+    "tsx": "4.22.4",
+    "typescript": "6.0.3",
+    "vite": "8.0.16",
+    "vitest": "4.1.8"
+  }
+}

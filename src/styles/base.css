@@ -1,0 +1,114 @@
+:root {
+  color: #2d2117;
+  background: #18130f;
+  font-family: "Nanum Myeongjo", "Iowan Old Style", "Georgia", serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(248, 177, 72, 0.28), transparent 24rem),
+    radial-gradient(circle at 84% 18%, rgba(39, 155, 144, 0.24), transparent 22rem),
+    linear-gradient(135deg, #1b130f 0%, #342519 45%, #112f35 100%);
+}
+
+button {
+  font: inherit;
+}
+
+.reader-shell {
+  min-height: 100vh;
+  padding: clamp(1rem, 2vw, 2rem);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  position: relative;
+}
+
+.reader-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.reader-toolbar {
+  position: relative;
+  z-index: 5;
+  width: min(58rem, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 240, 197, 0.24);
+  border-radius: 999px;
+  background: rgba(26, 19, 14, 0.74);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.icon-button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  color: #fff4cf;
+  background: rgba(255, 244, 207, 0.08);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.icon-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(247, 183, 79, 0.26);
+}
+
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.icon-button svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 1.8rem;
+  background: rgba(255, 244, 207, 0.28);
+}
+
+.reader-stats {
+  margin: 0 0 0 0.35rem;
+  padding: 0.45rem 0.75rem;
+  color: #ffe7a6;
+  background: rgba(255, 244, 207, 0.08);
+  border: 1px solid rgba(255, 244, 207, 0.18);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  white-space: nowrap;
+}

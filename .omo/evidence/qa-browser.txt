@@ -1,0 +1,4 @@
+
+> baguette-hero-gamebook@0.1.0 qa:browser
+> tsx scripts/qa-browser.ts
+

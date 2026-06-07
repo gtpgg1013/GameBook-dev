@@ -1,0 +1,83 @@
+.book-wrap {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  perspective: 1800px;
+}
+
+.book-pan-surface {
+  width: min(72rem, 92vw);
+  position: relative;
+  display: grid;
+  place-items: center;
+  transform: scale(var(--fallback-zoom, 1));
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.book-wrap[data-panzoom-engine="panzoom"] .book-pan-surface {
+  cursor: grab;
+  touch-action: none;
+}
+
+.book-wrap[data-panzoom-engine="panzoom"] .book-pan-surface:active {
+  cursor: grabbing;
+}
+
+.book-shadow {
+  position: absolute;
+  width: min(72rem, 88vw);
+  aspect-ratio: 1.56;
+  border-radius: 44% 56% 48% 52%;
+  background: rgba(0, 0, 0, 0.42);
+  filter: blur(30px);
+  pointer-events: none;
+  transform: translateY(2rem);
+}
+
+.page-motion-frame {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  transform-style: preserve-3d;
+}
+
+.book-flipper-shell {
+  width: min(70rem, 92vw);
+  display: grid;
+  place-items: center;
+}
+
+.book-flipper {
+  overflow: visible;
+}
+
+.flip-sheet {
+  background: transparent;
+  overflow: visible;
+}
+
+.native-flip-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.native-flip-block {
+  width: min(40rem, 82vw);
+  min-height: 28rem;
+}
+
+.native-flip-page {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 244, 207, 0.28);
+  background: #f0d7a5;
+  color: #412513;
+  font-weight: 900;
+}

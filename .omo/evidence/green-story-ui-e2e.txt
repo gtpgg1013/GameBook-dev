@@ -1,0 +1,10 @@
+$ vitest run tests/story-graph.test.ts tests/asset-manifest.test.ts tests/gamebook-ui.test.tsx
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  00:35:15
+   Duration  1.30s (transform 118ms, setup 149ms, import 379ms, tests 584ms, environment 878ms)
+

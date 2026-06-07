@@ -1,0 +1,14 @@
+
+> baguette-hero-gamebook@0.1.0 check
+> biome check . && tsc --noEmit && vitest run
+
+Checked 44 files in 18ms. No fixes applied.
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+
+ Test Files  3 passed (3)
+      Tests  31 passed (31)
+   Start at  16:42:38
+   Duration  3.99s (transform 242ms, setup 167ms, import 626ms, tests 3.07s, environment 1.13s)
+

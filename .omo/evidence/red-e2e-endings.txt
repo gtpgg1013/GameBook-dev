@@ -1,0 +1,7 @@
+$ playwright test
+[2m[WebServer] [22m[0m[2m[35m$[0m [2m[1mvite preview --host 127.0.0.1[0m
+[2m[WebServer] [22m(node:40771) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+Error: Timed out waiting 120000ms from config.webServer.
+
+error: script "test:e2e" exited with code 1

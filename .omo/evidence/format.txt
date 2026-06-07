@@ -1,0 +1,5 @@
+
+> baguette-hero-gamebook@0.1.0 format
+> biome check --write .
+
+Checked 28 files in 21ms. No fixes applied.

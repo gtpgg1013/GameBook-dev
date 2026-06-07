@@ -1,0 +1,5 @@
+tests/asset-manifest.test.ts:18:    const svgAssets = generatedAssets.filter((asset) => asset.path.endsWith(".svg"))
+src/game/interactionEngines.ts:1:import { Howl } from "howler"
+src/game/interactionEngines.ts:2:import { PageFlip } from "page-flip"
+src/game/interactionEngines.ts:3:import createPanZoom, { type PanZoom } from "panzoom"
+src/components/BookStage.tsx:13:import HTMLFlipBook from "react-pageflip"

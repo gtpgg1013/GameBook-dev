@@ -1,0 +1,50 @@
+
+> baguette-hero-gamebook@0.1.0 validate:story
+> vitest run tests/story-graph.test.ts
+
+
+ RUN  v4.1.8 /Users/gkk/Documents/GameBook
+
+ ❯ tests/story-graph.test.ts (5 tests | 2 failed) 8ms
+     × keeps ending route outcomes hidden until the target page is reached 4ms
+     × opens with readable prequel pages before the main danger branches 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/story-graph.test.ts > story graph contract > keeps ending route outcomes hidden until the target page is reached
+AssertionError: choices revealing ending route before travel: expected [ { id: 'c_p_0003_b', …(4) }, …(13) ] to have a length of +0 but got 14
+
+- Expected
++ Received
+
+- 0
++ 14
+
+ ❯ tests/story-graph.test.ts:50:78
+     48|     )
+     49|
+     50|     expect(revealingChoices, "choices revealing ending route before tr…
+       |                                                                              ^
+     51|   })
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/story-graph.test.ts > story graph contract > opens with readable prequel pages before the main danger branches
+AssertionError: prequel page count: expected 0 to be greater than or equal to 3
+ ❯ tests/story-graph.test.ts:58:55
+     56|     )
+     57|
+     58|     expect(prequelPages.length, "prequel page count").toBeGreaterThanO…
+       |                                                       ^
+     59|     expect(prequelPages.at(0)?.title).toContain("프리퀄")
+     60|     expect(prequelPages.at(0)?.body).toContain("바게트")
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  02:16:42
+   Duration  472ms (transform 31ms, setup 43ms, import 28ms, tests 8ms, environment 306ms)
+

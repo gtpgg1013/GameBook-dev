@@ -1,0 +1,11 @@
+GREEN ALL SUMMARY
+- npm run check: PASS, 31 tests (.omo/evidence/check.txt)
+- npm test: PASS, 31 tests (.omo/evidence/npm-test.txt)
+- npm run build: PASS, current JS index-lSQwd9se.js and CSS index-BHbP1H6W.css, Vite chunk warning only (.omo/evidence/build.txt)
+- npm run test:e2e: PASS, 2/2 Chrome scenarios (.omo/evidence/green-e2e.txt)
+- npm run qa:browser: PASS, screenshots and cleanup JSON refreshed (.omo/evidence/qa-browser.txt, browser-*.json/png)
+- LSP diagnostics: PASS, 0 diagnostics for src and scripts
+- Story contract: 160 story pages, 12 endings, 0 early real endings before page 118
+- Asset contract: 240 generated page art slots, 240 unique assets, 0 reused slots, no generated PNG under 20KB
+- Mobile UX contract: 390x844 viewport keeps artwork, 2-3 line scene beats, 3-step page copy, and all opening choices in one screen
+- Deployment: Caddy /gamebook/ 200 with security headers via --resolve; root and /assets root remain 401; external fetch proxy read https://gangkk.xyz/gamebook/?v=20260607-1642 successfully

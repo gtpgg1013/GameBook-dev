@@ -1,0 +1,17 @@
+
+> baguette-hero-gamebook@0.1.0 test:e2e
+> playwright test
+
+[2m[WebServer] [22m(node:79182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:79498) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:79498) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chrome] › tests/e2e/gamebook.spec.ts:11:1 › reader can turn a page, zoom, and reach both ending families (10.0s)
+  ✓  2 [chrome] › tests/e2e/gamebook.spec.ts:82:1 › mobile reader sees artwork, scene beat, and choices before advancing on touch (2.3s)
+
+  2 passed (13.8s)
