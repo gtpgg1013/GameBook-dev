@@ -1,12 +1,12 @@
 {
   "driver": "playwright-chrome",
-  "serverPid": 82172,
+  "serverPid": 44162,
   "checks": [
     "react-pageflip, panzoom, and howler engines were active in Chrome",
     "cover choice changed from page 1 to page 2",
     "zoom controls remained visible and responsive",
     "page 5 no longer jumps into an early good ending",
-    "good and bad ending routes both rendered",
+    "actual late good route clicked through and bad ending route rendered",
     "mobile page copy completes in three richer scene beats",
     "mobile viewport keeps artwork, scene beat, and all opening choices in one screen"
   ],

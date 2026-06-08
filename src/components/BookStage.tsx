@@ -8,6 +8,7 @@ import {
   usePanzoomSurface,
 } from "../game/interactionEngines"
 import { useReaderStore } from "../game/store"
+import { GAMEBOOK_TITLE } from "../story/bookMeta"
 import type { Choice, GamePage } from "../story/types"
 import { BookPageArticle } from "./BookPageArticle"
 import type { ReactPageFlipHandle } from "./pageFlipTypes"
@@ -89,7 +90,7 @@ export function BookStage({ page }: BookStageProps) {
   }
 
   return (
-    <main className="reader-shell" aria-label="바게트 용사 게임북">
+    <main className="reader-shell" aria-label={GAMEBOOK_TITLE}>
       <ReaderToolbar
         canGoBack={reader.history.length > 0}
         stats={reader.stats}

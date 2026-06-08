@@ -62,7 +62,7 @@
     grid-template-rows: auto auto auto;
     width: min(100%, 24rem);
     min-height: auto;
-    gap: 0.45rem;
+    gap: 0.38rem;
     padding: 0.55rem;
   }
 
@@ -76,7 +76,7 @@
 
   .page-hero {
     order: 1;
-    height: clamp(14rem, 39dvh, 19.5rem);
+    height: clamp(13.75rem, 38dvh, 19rem);
     min-height: auto;
     padding: 0.35rem;
   }
@@ -109,7 +109,6 @@
     gap: 0.32rem;
   }
 
-  .series-kicker,
   .page-tone,
   .page-copy h1,
   .page-copy .focus-line,
@@ -131,8 +130,8 @@
   }
 
   .mobile-scene-card {
-    min-height: 6.25rem;
-    padding: 0.58rem 0.68rem;
+    min-height: 6rem;
+    padding: 0.52rem 0.68rem;
     display: grid;
     align-content: center;
     gap: 0.2rem;
@@ -174,12 +173,12 @@
 
   .choice-panel {
     order: 3;
-    gap: 0.38rem;
+    gap: 0.32rem;
   }
 
   .choice-button {
-    min-height: 2.85rem;
-    padding: 0.58rem 0.75rem;
+    min-height: 2.72rem;
+    padding: 0.5rem 0.75rem;
     font-size: 0.95rem;
     line-height: 1.24;
   }

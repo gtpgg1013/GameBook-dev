@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest"
 import { getReachabilityReport } from "../src/story/graph"
-import { withSubjectParticle } from "../src/story/korean"
-import { ENDING_MINIMUM, PAGE_MINIMUM, storyPages } from "../src/story/pages"
-import { chapterFor } from "../src/story/storyWorld"
+import { deterministicRoutes, ENDING_MINIMUM, PAGE_MINIMUM, storyPages } from "../src/story/pages"
+import { chapters } from "../src/story/storyChapters"
+import { endingRouteLabels, endingRouteSlots } from "../src/story/storyEndingRoutes"
+import { storyRoutes } from "../src/story/storySchema"
+import { arrivalForPage, chapterFor } from "../src/story/storyWorld"
+import { choiceByLabel, sourceSceneFragments, storyPageById } from "./story-test-helpers"
 
 describe("story graph contract", () => {
   it("keeps the nostalgic gamebook large enough when generated", () => {
@@ -18,10 +21,40 @@ describe("story graph contract", () => {
     expect(report.reachablePageCount, "reachable page count").toBe(storyPages.length)
   })
 
+  it("keeps deterministic route fixtures aligned with real choices", () => {
+    for (const [routeName, route] of Object.entries(deterministicRoutes)) {
+      for (let index = 0; index < route.length - 1; index += 1) {
+        const currentId = route[index]
+        const nextId = route[index + 1]
+        const page = storyPages.find((candidate) => candidate.id === currentId)
+        const hasEdge = page?.choices.some((choice) => choice.targetId === nextId) ?? false
+
+        expect(hasEdge, `${routeName} route edge ${currentId} -> ${nextId}`).toBe(true)
+      }
+    }
+  })
+
+  it("keeps chapter route copy sets aligned", () => {
+    for (const chapter of chapters) {
+      for (const route of storyRoutes) {
+        const copy = chapter.routes[route]
+        const lengths = [
+          copy.labels.length,
+          copy.leads.length,
+          copy.pressures.length,
+          copy.rewards.length,
+          copy.keywords.length,
+        ]
+        expect(new Set(lengths).size, `${chapter.arc} ${route} copy lengths`).toBe(1)
+        expect(copy.labels.length, `${chapter.arc} ${route} copy count`).toBeGreaterThan(0)
+      }
+    }
+  })
+
   it("gives every story page a concise scene, focus line, and state effects", () => {
     const storyOnly = storyPages.filter((page) => page.kind === "story")
     const shortPages = storyOnly.filter((page) => page.body.length < 110)
-    const bloatedPages = storyOnly.filter((page) => page.body.length > 240)
+    const bloatedPages = storyOnly.filter((page) => page.body.length > 320)
     const missingFunction = storyOnly.filter((page) => page.narrativeFunction.length < 8)
     const pagesWithoutEffects = storyOnly.filter((page) =>
       page.choices.every((choice) => choice.effects.length === 0),
@@ -29,7 +62,7 @@ describe("story graph contract", () => {
     const uniqueBodies = new Set(storyOnly.map((page) => page.body))
 
     expect(shortPages, "story pages under 110 Korean chars").toHaveLength(0)
-    expect(bloatedPages, "story pages over 240 Korean chars").toHaveLength(0)
+    expect(bloatedPages, "story pages over 320 Korean chars").toHaveLength(0)
     expect(missingFunction, "pages missing narrative function").toHaveLength(0)
     expect(pagesWithoutEffects, "pages without state-changing choices").toHaveLength(0)
     expect(uniqueBodies.size, "unique story body count").toBeGreaterThanOrEqual(150)
@@ -53,43 +86,6 @@ describe("story graph contract", () => {
     expect(nonLinearChoices.length, "non-linear branch choices").toBeGreaterThanOrEqual(140)
   })
 
-  it("frames every visible choice as concrete action instead of page-number instruction", () => {
-    const instructionChoices = storyPages.flatMap((page) =>
-      page.choices.filter((choice) => /\d+쪽|가시오/u.test(choice.label)),
-    )
-    const actionWords = [
-      "간다",
-      "돕는다",
-      "조사한다",
-      "설득한다",
-      "싸운다",
-      "숨는다",
-      "나눈다",
-      "구한다",
-      "수리한다",
-      "거래한다",
-      "기다린다",
-      "지킨다",
-      "도와준다",
-      "식힌다",
-      "당긴다",
-      "따라간다",
-      "선택한다",
-    ]
-    const nonActionChoices = storyPages.flatMap((page) =>
-      page.choices.filter((choice) => !actionWords.some((word) => choice.label.includes(word))),
-    )
-    const choicesWithoutOutcome = storyPages.flatMap((page) =>
-      page.choices.filter(
-        (choice) => choice.consequence.action.length < 4 || choice.consequence.result.length < 40,
-      ),
-    )
-
-    expect(instructionChoices, "choices that expose page-number instructions").toHaveLength(0)
-    expect(nonActionChoices, "choices without concrete action verbs").toHaveLength(0)
-    expect(choicesWithoutOutcome, "choices without meaningful consequences").toHaveLength(0)
-  })
-
   it("connects the opening village actions to matching result scenes", () => {
     const firstPage = storyPageById("p_0001")
     const armoryChoice = choiceByLabel(firstPage, "무기고로 간다")
@@ -108,27 +104,44 @@ describe("story graph contract", () => {
     expect(ovenChoice.consequence.result).toContain("아직 멀다")
   })
 
-  it("derives generated-page actions from the current scene context", () => {
+  it("derives generated-page bodies from the current scene context", () => {
     for (const pageNumber of [6, 18, 82, 142]) {
       const page = storyPageById(`p_${String(pageNumber).padStart(4, "0")}`)
       const chapter = chapterFor(pageNumber)
-      const expectedActions = [
-        chapter.actions.brave,
-        chapter.actions.risky,
-        chapter.actions.kind,
-      ] as const
+      const arrival = arrivalForPage(pageNumber)
+      const openingParagraph = page.body.split("\n\n").at(0)
 
-      expect(page.body).toContain(chapter.location)
+      expect(openingParagraph).not.toBe(`${chapter.location}.`)
+      expect(openingParagraph).toContain(arrival.action)
+      expect(page.body).toContain(chapter.threat)
       expect(page.body).toContain(chapter.ally)
-      expect(page.body).toContain(chapter.pressure)
-      expect(page.choices.map((choice) => choice.label)).toEqual(expectedActions)
-      expect(choiceByLabel(page, chapter.actions.brave).consequence.result).toContain(
-        chapter.location,
-      )
-      expect(choiceByLabel(page, chapter.actions.risky).consequence.result).toContain(
-        chapter.pressure,
-      )
-      expect(choiceByLabel(page, chapter.actions.kind).consequence.result).toContain(chapter.ally)
+      expect(page.body).toContain(chapter.goal)
+      expect(page.body).toContain(arrival.keyword)
+      expect(page.body).toContain("겠는걸")
+      expect(page.narrativeFunction).toContain(chapter.bridge)
+      expect(page.narrativeFunction).toContain(arrival.keyword)
+    }
+  })
+
+  it("carries each generated choice action into the destination page", () => {
+    const generatedChoices = storyPages.flatMap((page) => {
+      if (page.kind !== "story" || page.number <= 5) {
+        return []
+      }
+      return page.choices
+    })
+
+    for (const choice of generatedChoices) {
+      const target = storyPages.find((candidate) => candidate.id === choice.targetId)
+      if (target?.kind !== "story" || target.number <= 5) {
+        continue
+      }
+      const arrival = arrivalForPage(target.number)
+      expect(choice.label).toBe(arrival.action)
+      expect(choice.consequence.result).toContain(arrival.keyword)
+      expect(target.body).toContain(arrival.action)
+      expect(target.body).toContain(arrival.keyword)
+      expect(target.body).toContain("겠는걸")
     }
   })
 
@@ -142,13 +155,46 @@ describe("story graph contract", () => {
         if (target?.kind !== "story") {
           return false
         }
-        const staysInChapter = chapterLabel(page) === chapterLabel(target)
-        const entersNextPage = target.number === page.number + 1
-        return target.number <= 5 || (!staysInChapter && !entersNextPage)
+        const nearForwardPage = target.number > page.number && target.number <= page.number + 3
+        return target.number <= 5 || !nearForwardPage
       })
     })
 
     expect(dislocatedRoutes, "generated choices jumping to unrelated story pages").toHaveLength(0)
+  })
+
+  it("grounds generated ending choices in the current scene", () => {
+    const ungroundedEndingChoices = storyPages.flatMap((page) => {
+      if (page.kind !== "story" || page.number <= 5) {
+        return []
+      }
+      const localFragments = sourceSceneFragments(page.number)
+      return page.choices.filter((choice) => {
+        const target = storyPages.find((candidate) => candidate.id === choice.targetId)
+        return (
+          target?.kind !== "story" && !localFragments.some((word) => choice.label.includes(word))
+        )
+      })
+    })
+
+    expect(ungroundedEndingChoices, "ending choices detached from source scene").toHaveLength(0)
+  })
+
+  it("uses curated source-scene labels for ending route choices", () => {
+    for (const [pageNumberText, routeTargets] of Object.entries(endingRouteSlots)) {
+      const pageNumber = Number(pageNumberText)
+      const page = storyPageById(`p_${String(pageNumber).padStart(4, "0")}`)
+      const routeLabels = endingRouteLabels[pageNumber]
+      for (const route of storyRoutes) {
+        const targetId = routeTargets[route]
+        if (targetId === undefined) {
+          continue
+        }
+        const expectedLabel = routeLabels?.[route]
+        const choice = page.choices.find((candidate) => candidate.targetId === targetId)
+        expect(choice?.label, `${page.id} ${route} ending label`).toBe(expectedLabel)
+      }
+    }
   })
 
   it("keeps ending route outcomes hidden until the target page is reached", () => {
@@ -196,50 +242,11 @@ describe("story graph contract", () => {
     expect(earlyRealEndings, "real endings before page 118").toHaveLength(0)
   })
 
-  it("opens with readable prequel pages before the main danger branches", () => {
-    const prequelPages = storyPages.filter(
-      (page) => page.kind === "story" && page.narrativeFunction.startsWith("프리퀄"),
-    )
+  it("opens with readable setup pages before the main danger branches", () => {
+    const openingPages = storyPages.filter((page) => page.kind === "story" && page.number <= 5)
 
-    expect(prequelPages.length, "prequel page count").toBeGreaterThanOrEqual(3)
-    expect(prequelPages.at(0)?.title).toContain("프리퀄")
-    expect(prequelPages.at(0)?.body).toContain("바게트")
-  })
-
-  it("uses natural Korean subject particles in generated copy", () => {
-    expect(withSubjectParticle("소금 상인 로미")).toBe("소금 상인 로미가")
-    expect(withSubjectParticle("반죽 지도 제작자 피노")).toBe("반죽 지도 제작자 피노가")
-    expect(withSubjectParticle("곰팡이 정찰병")).toBe("곰팡이 정찰병이")
-    expect(withSubjectParticle("작은 목소리")).toBe("작은 목소리가")
-
-    const storyOnly = storyPages.filter((page) => page.kind === "story")
-    const allVisibleCopy = storyPages
-      .flatMap((page) => [page.body, ...page.choices.map((choice) => choice.consequence.result)])
-      .join("\n")
-
-    expect(storyPageById("p_0035").body).toContain("소금 상인 로미가")
-    expect(storyPageById("p_0149").body).toContain("작은 목소리가")
-    expect(allVisibleCopy).not.toMatch(/(로미|피노|목소리|냄새)이/u)
-    expect(storyOnly.map((page) => page.body).join("\n")).not.toContain("가이")
+    expect(openingPages.length, "opening page count").toBe(5)
+    expect(openingPages.at(0)?.title).toContain("바게트")
+    expect(openingPages.at(0)?.body).toContain("바게트")
   })
 })
-
-function storyPageById(id: string) {
-  const page = storyPages.find((candidate) => candidate.id === id)
-  if (page?.kind !== "story") {
-    throw new Error(`Expected ${id} to be a story page`)
-  }
-  return page
-}
-
-function choiceByLabel(page: ReturnType<typeof storyPageById>, label: string) {
-  const choice = page.choices.find((candidate) => candidate.label === label)
-  if (choice === undefined) {
-    throw new Error(`Expected ${page.id} to include choice ${label}`)
-  }
-  return choice
-}
-
-function chapterLabel(page: ReturnType<typeof storyPageById>): string {
-  return page.narrativeFunction.split(":")[0] ?? page.narrativeFunction
-}

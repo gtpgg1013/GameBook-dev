@@ -1,5 +1,2 @@
-Directory: /Users/gkk/Documents/GameBook
-Extension: .ts
-Files scanned: 18
-Files with errors: 0
-Total diagnostics: 0
+LSP status: typescript server missing, biome installed.
+Diagnostics: src scanned 25 TS/TSX files, 0 diagnostics. tests scanned 5 TS/TSX files, 0 diagnostics.

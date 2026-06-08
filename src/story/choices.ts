@@ -1,8 +1,10 @@
-import { chapterConsequence, consequenceFor } from "./consequences"
-import { endingMilestones, endingSpecs, STORY_PAGE_COUNT } from "./constants"
+import { consequenceFor, consequenceForArrival, consequenceForEnding } from "./consequences"
+import { type EndingId, STORY_PAGE_COUNT } from "./constants"
 import { pageId } from "./ids"
 import { pick } from "./shared"
-import { chapterFor } from "./storyWorld"
+import { endingRouteLabels, endingRouteSlots, fallbackEnding } from "./storyEndingRoutes"
+import { type StoryRoute, storyRoutes } from "./storySchema"
+import { arrivalForPage, chapterFor, routeForStoryPage } from "./storyWorld"
 import type { Choice, ChoiceEffect } from "./types"
 
 type ChoiceSlot = "a" | "b" | "c"
@@ -16,9 +18,6 @@ type ChoicePlan = {
 }
 
 const choiceSlots = ["a", "b", "c"] as const
-const CHAPTER_SIZE = 16
-const FIRST_GENERATED_PAGE = 6
-const ENDING_GATE_PAGE = 118
 
 const scriptedChoices: Readonly<Record<number, readonly ChoicePlan[]>> = {
   1: [
@@ -76,39 +75,76 @@ export function choicesFor(number: number): readonly Choice[] {
 }
 
 function generatedPlans(number: number): readonly ChoicePlan[] {
+  return storyRoutes.map((route) => planForRoute(number, route))
+}
+
+function planForRoute(number: number, route: StoryRoute): ChoicePlan {
+  const endingId = endingRouteSlots[number]?.[route]
+  if (endingId !== undefined) {
+    return endingPlan(endingId, route, number)
+  }
+
+  const targetNumber = nextStoryPageForRoute(number, route)
+  if (targetNumber === undefined) {
+    return endingPlan(fallbackEnding(route), route, number)
+  }
+
+  const scene = arrivalForPage(targetNumber)
+  return action(
+    scene.action,
+    pageId(targetNumber),
+    toneForRoute(route),
+    effectsForRoute(route, targetNumber),
+    consequenceForArrival(scene),
+  )
+}
+
+function endingPlan(id: EndingId, route: StoryRoute, number: number): ChoicePlan {
+  return action(
+    endingLabelForSource(id, route, number),
+    id,
+    toneForEnding(id, route),
+    effectsForRoute(route, number),
+    consequenceForEnding(id),
+  )
+}
+
+function endingLabelForSource(id: EndingId, route: StoryRoute, number: number): string {
+  const curatedLabel = endingRouteLabels[number]?.[route]
+  if (curatedLabel !== undefined) {
+    return curatedLabel
+  }
+
   const chapter = chapterFor(number)
-  return [
-    action(
-      chapter.actions.brave,
-      steadyTarget(number),
-      "brave",
-      [{ kind: "stat", stat: "courage", delta: 1 }],
-      chapterConsequence(chapter, "brave"),
-    ),
-    action(
-      chapter.actions.risky,
-      riskyTarget(number),
-      number % 3 === 0 ? "foolish" : "secret",
-      [
-        { kind: "stat", stat: number % 3 === 0 ? "doubt" : "crumbs", delta: 2 },
-        { kind: "flag", flag: `risk_${number}`, value: true },
-      ],
-      chapterConsequence(chapter, "risky"),
-    ),
-    action(
-      chapter.actions.kind,
-      reflectiveTarget(number),
-      "cautious",
-      [
-        {
-          kind: "item",
-          item: pick(["접힌 책갈피", "소금 결정", "버터 봉인", "밀짚 매듭"], number),
-        },
-        { kind: "stat", stat: "crumbs", delta: 1 },
-      ],
-      chapterConsequence(chapter, "kind"),
-    ),
-  ]
+  const scene = arrivalForPage(number)
+  switch (id) {
+    case "e_good_crust_crown":
+      return "새벽 빵집 불을 끝까지 지킨다"
+    case "e_good_bakery_dawn":
+      return "첫 새벽빵을 사람들과 나눈다"
+    case "e_bad_toasted":
+      return `${scene.keyword} 쪽으로 무리하게 밀고 간다`
+    case "e_bad_mold_curse":
+      return `${chapter.clue} 기록을 끝까지 읽는다`
+    case "e_bad_sliced":
+      return `${chapter.location}의 빠른 길로 뛰어든다`
+    case "e_neutral_market_truce":
+      return `${chapter.location} 사람들의 거래를 받아들인다`
+    case "e_neutral_wheat_exile":
+      return `${chapter.location}의 조용한 길로 들어간다`
+    case "e_joke_butter_idol":
+      return `황금빛 ${scene.keyword} 냄새를 따라간다`
+    case "e_joke_infinite_toaster":
+      return `${chapter.threat}를 한 번 더 당긴다`
+    case "e_secret_sourdough_oracle":
+      return `${scene.keyword} 뒤의 오래된 문을 연다`
+    case "e_secret_crumb_void":
+      return `${chapter.bridge} 아래 별빛을 따라간다`
+    case "e_true_baguette_hero":
+      return "새벽 빵집의 마지막 빵을 함께 나눈다"
+    default:
+      return assertNever(id)
+  }
 }
 
 function action(
@@ -118,13 +154,7 @@ function action(
   effects: readonly ChoiceEffect[],
   result = consequenceFor(label, tone),
 ): ChoicePlan {
-  return {
-    label,
-    targetId,
-    tone,
-    effects,
-    result,
-  }
+  return { label, targetId, tone, effects, result }
 }
 
 function makeChoice(number: number, slot: ChoiceSlot, plan: ChoicePlan): Choice {
@@ -141,58 +171,53 @@ function makeChoice(number: number, slot: ChoiceSlot, plan: ChoicePlan): Choice 
   }
 }
 
-function steadyTarget(number: number): string {
-  return number < STORY_PAGE_COUNT ? pageId(number + 1) : "e_true_baguette_hero"
+function nextStoryPageForRoute(number: number, route: StoryRoute): number | undefined {
+  for (let targetNumber = number + 1; targetNumber <= STORY_PAGE_COUNT; targetNumber += 1) {
+    if (routeForStoryPage(targetNumber) === route) {
+      return targetNumber
+    }
+  }
+  return undefined
 }
 
-function riskyTarget(number: number): string {
-  const milestone = endingMilestones[number]
-  if (milestone !== undefined) {
-    return milestone
+function effectsForRoute(route: StoryRoute, index = 0): readonly ChoiceEffect[] {
+  const chapter = chapterFor(Math.max(6, index))
+  switch (route) {
+    case "front":
+      return [{ kind: "stat", stat: "courage", delta: 1 }]
+    case "clue":
+      return [
+        { kind: "stat", stat: "crumbs", delta: 1 },
+        { kind: "flag", flag: `clue_${index}`, value: true },
+      ]
+    case "heart":
+      return [
+        { kind: "item", item: chapter.routes.heart.item },
+        { kind: "stat", stat: "crumbs", delta: 1 },
+      ]
+    default:
+      return assertNever(route)
   }
-  return contextualForwardTarget(number, pick([6, 9, 13, 17, 21], number))
 }
 
-function reflectiveTarget(number: number): string {
-  if (number >= ENDING_GATE_PAGE && number % 11 === 0) {
-    return pick(endingSpecs, number)[0]
+function toneForRoute(route: StoryRoute): Choice["tone"] {
+  switch (route) {
+    case "front":
+      return "brave"
+    case "clue":
+      return "secret"
+    case "heart":
+      return "cautious"
+    default:
+      return assertNever(route)
   }
-  return contextualBackwardTarget(number, pick([2, 4, 7, 10], number))
 }
 
-function contextualForwardTarget(number: number, offset: number): string {
-  if (number >= STORY_PAGE_COUNT) {
-    return pick(endingSpecs, number)[0]
+function toneForEnding(id: EndingId, route: StoryRoute): Choice["tone"] {
+  if (id.startsWith("e_bad")) {
+    return "foolish"
   }
-  const chapterEnd = generatedChapterEnd(number)
-  const targetNumber = number + offset
-  if (targetNumber <= chapterEnd) {
-    return pageId(targetNumber)
-  }
-  const fallbackNumber = number + 2 <= chapterEnd ? number + 2 : number + 1
-  return pageId(fallbackNumber)
-}
-
-function contextualBackwardTarget(number: number, offset: number): string {
-  const chapterStart = generatedChapterStart(number)
-  const targetNumber = number - offset
-  if (targetNumber >= chapterStart) {
-    return pageId(targetNumber)
-  }
-  if (number > chapterStart) {
-    return pageId(chapterStart)
-  }
-  return pageId(Math.min(generatedChapterEnd(number), number + 3))
-}
-
-function generatedChapterStart(number: number): number {
-  const chapterStart = Math.floor((number - 1) / CHAPTER_SIZE) * CHAPTER_SIZE + 1
-  return Math.max(FIRST_GENERATED_PAGE, chapterStart)
-}
-
-function generatedChapterEnd(number: number): number {
-  const chapterStart = Math.floor((number - 1) / CHAPTER_SIZE) * CHAPTER_SIZE + 1
-  return Math.min(STORY_PAGE_COUNT, chapterStart + CHAPTER_SIZE - 1)
+  return toneForRoute(route)
 }
 
 function uniqueChoices(choices: readonly Choice[]): readonly Choice[] {
@@ -205,4 +230,8 @@ function uniqueChoices(choices: readonly Choice[]): readonly Choice[] {
     }
   }
   return unique
+}
+
+function assertNever(value: never): never {
+  throw new Error(`Unexpected choice variant: ${String(value)}`)
 }

@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it } from "vitest"
 import { App } from "../src/App"
 import { useReaderStore } from "../src/game/store"
 
+const titlePattern = /눈떠보니 바게트로\s+싸우는 이세계라고\?!/u
+
 describe("gamebook UI", () => {
   beforeEach(() => {
     window.localStorage.clear()
@@ -14,7 +16,11 @@ describe("gamebook UI", () => {
     const user = userEvent.setup()
     render(<App />)
 
-    expect(screen.getByRole("heading", { name: /바게트 용사 게임북/u })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: titlePattern })).toBeInTheDocument()
+    expect(screen.queryByText("낡은 선택형 모험서")).not.toBeInTheDocument()
+    expect(screen.queryByText(/첫 장|선택/u)).not.toBeInTheDocument()
+    expect(screen.queryByText(/빵 냄새가 짙어진다|바게트가 손안에서/u)).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { level: 2 })).not.toBeInTheDocument()
     expect(screen.getByTestId("page-number")).toHaveTextContent("1쪽")
 
     await user.click(screen.getByRole("button", { name: "무기고로 간다" }))
@@ -22,6 +28,9 @@ describe("gamebook UI", () => {
     await waitFor(() => expect(screen.getByTestId("page-number")).toHaveTextContent("2쪽"))
     expect(screen.getByTestId("last-decision")).toHaveTextContent("무기고로 간다")
     expect(screen.getByTestId("last-consequence")).toHaveTextContent("바게트")
+    expect(screen.queryByText(/첫 장|선택/u)).not.toBeInTheDocument()
+    expect(screen.queryByText(/빵 냄새가 짙어진다|바게트가 손안에서/u)).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { level: 2 })).not.toBeInTheDocument()
   })
 
   it("zooms the book without losing controls", async () => {
@@ -78,7 +87,7 @@ describe("gamebook UI", () => {
     const sceneStep = screen.getByTestId("mobile-scene-step")
     const firstBeat = sceneStep.textContent ?? ""
 
-    expect(sceneStep).toHaveTextContent("프리퀄")
+    expect(sceneStep).toHaveTextContent("바게트")
     expect(firstBeat.split("\n").length).toBeGreaterThanOrEqual(2)
     expect(screen.getByTestId("mobile-scene-index")).toHaveTextContent("1/3")
     expect(screen.getByRole("button", { name: "무기고로 간다" })).toBeInTheDocument()

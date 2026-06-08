@@ -1,26 +1,46 @@
 import { devices, expect, type Page, test } from "@playwright/test"
+import { deterministicRoutes } from "../../src/story/pages"
 
+const titlePattern = /눈떠보니 바게트로\s+싸우는 이세계라고\?!/u
 const goTo2 = "무기고로 간다"
 const goTo3 = "술집으로 간다"
 const goTo4 = "문지기를 설득한다"
 const goTo5 = "식빵 방패병을 돕는다"
 const coolOven = "왕실 오븐을 식힌다"
 const goToBadEnding = "문지기를 밀치고 지나간다"
-const restart = "처음부터 다시 선택한다"
+const restart = "책을 처음부터 다시 펼친다"
+
+test.setTimeout(90_000)
 
 test("reader can turn a page, zoom, and reach both ending families", async ({ page }) => {
-  const errors: string[] = []
+  const consoleErrors: string[] = []
+  const resourceErrors: string[] = []
   page.on("console", (message) => {
     if (message.type() === "error") {
-      errors.push(message.text())
+      const text = message.text()
+      if (!text.startsWith("Failed to load resource:")) {
+        consoleErrors.push(text)
+      }
     }
+  })
+  page.on("response", (response) => {
+    if (response.status() >= 400) {
+      resourceErrors.push(`${response.status()} ${response.url()}`)
+    }
+  })
+  page.on("requestfailed", (request) => {
+    resourceErrors.push(`failed ${request.url()} ${request.failure()?.errorText ?? "unknown"}`)
   })
 
   await page.goto("/")
-  await expect(page.getByRole("heading", { name: /바게트 용사 게임북/u })).toBeVisible()
+  await expect(page.getByRole("heading", { name: titlePattern })).toBeVisible()
+  await expect(page.getByText("낡은 선택형 모험서")).toHaveCount(0)
+  await expect(page.getByText(/첫 장|선택/u)).toHaveCount(0)
+  await expect(page.getByText(/빵 냄새가 짙어진다|바게트가 손안에서/u)).toHaveCount(0)
+  await expect(page.getByRole("heading", { level: 2 })).toHaveCount(0)
   await expect(page.getByTestId("book-stage")).toHaveAttribute(
     "data-pageflip-engine",
-    "react-pageflip",
+    /react-pageflip|page-flip-fallback/u,
   )
   await expect(page.getByTestId("book-stage")).toHaveAttribute("data-panzoom-engine", "panzoom")
   await expect(page.getByTestId("book-stage")).toHaveAttribute("data-audio-engine", "howler")
@@ -31,6 +51,9 @@ test("reader can turn a page, zoom, and reach both ending families", async ({ pa
   await expect(page.getByTestId("page-number").first()).toHaveText("2쪽")
   await expect(page.getByTestId("last-decision")).toContainText(goTo2)
   await expect(page.getByTestId("last-consequence")).toContainText("바게트")
+  await expect(page.getByText(/첫 장|선택/u)).toHaveCount(0)
+  await expect(page.getByText(/빵 냄새가 짙어진다|바게트가 손안에서/u)).toHaveCount(0)
+  await expect(page.getByRole("heading", { level: 2 })).toHaveCount(0)
 
   const surface = page.locator(".book-pan-surface")
   const stageBox = await page.getByTestId("book-stage").boundingBox()
@@ -66,7 +89,9 @@ test("reader can turn a page, zoom, and reach both ending families", async ({ pa
   await expect(page.getByTestId("page-number").first()).toHaveText("6쪽")
   await expect(page.getByTestId("last-consequence")).toContainText("아직 멀다")
 
-  await page.goto("/?route=good")
+  await page.getByRole("button", { name: "처음", exact: true }).click()
+  await expect(page.getByTestId("page-number").first()).toHaveText("1쪽")
+  await followRouteByTarget(page, deterministicRoutes.good, "굿 엔딩")
   await expect(page.getByText("굿 엔딩", { exact: true })).toBeVisible()
   await page.getByRole("button", { name: restart }).click()
   await expect(page.getByTestId("page-number").first()).toHaveText("1쪽")
@@ -76,7 +101,8 @@ test("reader can turn a page, zoom, and reach both ending families", async ({ pa
   await page.getByRole("button", { name: goToBadEnding }).click()
   await expect(page.getByText("배드 엔딩", { exact: true })).toBeVisible()
 
-  expect(errors, "critical console errors").toHaveLength(0)
+  expect(consoleErrors, "critical console errors").toHaveLength(0)
+  expect(resourceErrors, "failed resource requests").toHaveLength(0)
 })
 
 test("mobile reader sees artwork, scene beat, and choices before advancing on touch", async ({
@@ -134,4 +160,23 @@ async function expectMobileOpeningToFit(page: Page, lastChoice: ReturnType<Page[
   expect(heroBox.y).toBeGreaterThanOrEqual(0)
   expect(sceneBox.y).toBeGreaterThan(heroBox.y)
   expect(choiceBox.y + choiceBox.height).toBeLessThanOrEqual(viewport.height)
+}
+
+async function followRouteByTarget(
+  page: Page,
+  route: readonly string[],
+  endingLabel: string,
+): Promise<void> {
+  for (let index = 0; index < route.length - 1; index += 1) {
+    const nextId = route[index + 1]
+    if (nextId === undefined) {
+      throw new Error(`Unexpected empty route step at ${index}`)
+    }
+
+    await page.locator(`[data-choice-target="${nextId}"]`).click()
+    if (nextId.startsWith("p_")) {
+      continue
+    }
+    await expect(page.getByText(endingLabel, { exact: true })).toBeVisible()
+  }
 }

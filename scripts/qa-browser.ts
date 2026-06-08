@@ -3,6 +3,16 @@ import { once } from "node:events"
 import { mkdir, writeFile } from "node:fs/promises"
 import net from "node:net"
 import { type Browser, chromium } from "@playwright/test"
+import {
+  assertMobileSceneFits,
+  badRoute,
+  followRoute,
+  lateGoodRoute,
+  waitForEngineActivation,
+  waitForMotion,
+  waitForSceneBeatChange,
+  waitForStageZoom,
+} from "./qa-browser-support"
 
 const evidenceDir = ".omo/evidence"
 const port = 4173
@@ -12,8 +22,7 @@ const goTo3 = "술집으로 간다"
 const goTo4 = "문지기를 설득한다"
 const goTo5 = "식빵 방패병을 돕는다"
 const coolOven = "왕실 오븐을 식힌다"
-const goToBadEnding = "문지기를 밀치고 지나간다"
-const restart = "처음부터 다시 선택한다"
+const restart = "책을 처음부터 다시 펼친다"
 
 type QaResult = {
   readonly driver: "playwright-chrome"
@@ -34,8 +43,8 @@ if (await isPortOpen()) {
 }
 
 const server = spawn(
-  "npm",
-  ["run", "preview", "--", "--host", "127.0.0.1", "--port", String(port)],
+  "node_modules/.bin/vite",
+  ["preview", "--host", "127.0.0.1", "--port", String(port)],
   {
     cwd: process.cwd(),
     detached: true,
@@ -88,18 +97,18 @@ try {
   await page.getByTestId("page-number").first().filter({ hasText: "6쪽" }).waitFor()
   await page.getByTestId("last-consequence").filter({ hasText: "아직 멀다" }).waitFor()
   checks.push("page 5 no longer jumps into an early good ending")
-  await page.goto(`${baseUrl}/?route=good`)
-  await page.getByText("굿 엔딩", { exact: true }).waitFor()
+  await page.getByRole("button", { name: "처음", exact: true }).click()
+  await page.getByTestId("page-number").first().filter({ hasText: "1쪽" }).waitFor()
+  await followRoute(page, lateGoodRoute, "굿 엔딩")
   await page.getByRole("button", { name: restart }).click()
-  await page.getByRole("button", { name: goTo2 }).click()
-  await page.getByRole("button", { name: goTo3 }).click()
-  await page.getByRole("button", { name: goToBadEnding }).click()
+  await page.getByTestId("page-number").first().filter({ hasText: "1쪽" }).waitFor()
+  await followRoute(page, badRoute, "배드 엔딩")
   await page.getByText("배드 엔딩", { exact: true }).waitFor()
   await waitForMotion()
   const endingsShot = `${evidenceDir}/browser-endings.png`
   await page.screenshot({ path: endingsShot, fullPage: true })
   screenshots.push(endingsShot)
-  checks.push("good and bad ending routes both rendered")
+  checks.push("actual late good route clicked through and bad ending route rendered")
 
   await context.close()
   browserContextClosed = true
@@ -176,57 +185,6 @@ async function waitForServer(): Promise<void> {
     await new Promise((resolve) => setTimeout(resolve, 150))
   }
   throw new Error(`Preview server did not answer at ${baseUrl}`)
-}
-
-async function waitForMotion(): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 550))
-}
-
-async function waitForStageZoom(
-  page: Awaited<ReturnType<Browser["newPage"]>>,
-  zoom: string,
-): Promise<void> {
-  await page.waitForFunction((expectedZoom) => {
-    const stage = document.querySelector("[data-testid='book-stage']")
-    return stage?.getAttribute("data-zoom") === expectedZoom
-  }, zoom)
-}
-
-async function waitForSceneBeatChange(
-  page: Awaited<ReturnType<Browser["newPage"]>>,
-  previousText: string,
-): Promise<void> {
-  await page.waitForFunction((oldText) => {
-    const step = document.querySelector("[data-testid='mobile-scene-step']")
-    return step?.textContent !== oldText
-  }, previousText)
-}
-
-async function assertMobileSceneFits(page: Awaited<ReturnType<Browser["newPage"]>>): Promise<void> {
-  const viewport = page.viewportSize()
-  const heroBox = await page.locator(".page-hero").boundingBox()
-  const sceneBox = await page.getByTestId("mobile-scene-step").boundingBox()
-  const choiceBox = await page.getByRole("button", { name: "어려운 사람을 도와준다" }).boundingBox()
-  if (viewport === null || heroBox === null || sceneBox === null || choiceBox === null) {
-    throw new Error("Expected mobile scene to have measurable browser boxes")
-  }
-  const choiceBottom = choiceBox.y + choiceBox.height
-  if (heroBox.y < 0 || sceneBox.y < 0 || choiceBottom > viewport.height) {
-    throw new Error("Mobile first screen does not fit artwork, scene text, and first choice")
-  }
-}
-
-async function waitForEngineActivation(
-  page: Awaited<ReturnType<Browser["newPage"]>>,
-): Promise<void> {
-  await page.waitForFunction(() => {
-    const stage = document.querySelector("[data-testid='book-stage']")
-    return (
-      stage?.getAttribute("data-pageflip-engine") === "react-pageflip" &&
-      stage.getAttribute("data-panzoom-engine") === "panzoom" &&
-      stage.getAttribute("data-audio-engine") === "howler"
-    )
-  })
 }
 
 function killServer(): boolean {

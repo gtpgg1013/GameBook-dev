@@ -1,5 +1,6 @@
 import { BookOpen } from "lucide-react"
 import { useMemo, useState } from "react"
+import { GAMEBOOK_TITLE } from "../story/bookMeta"
 import type { Choice, ChoiceConsequence, GamePage } from "../story/types"
 
 type BookPageArticleProps = {
@@ -34,13 +35,12 @@ export function BookPageArticle({
         </div>
       </div>
       <div className="page-copy">
-        <p className="series-kicker">낡은 선택형 모험서</p>
-        <h1>바게트 용사 게임북</h1>
-        <p className="page-tone">{endingToneLabel(page.kind)}</p>
-        <h2>{page.title}</h2>
+        <h1>{GAMEBOOK_TITLE}</h1>
+        {page.kind === "story" ? null : <p className="page-tone">{endingToneLabel(page.kind)}</p>}
+        {page.kind === "story" ? null : <h2>{page.title}</h2>}
         <FocusLine page={page} />
         {lastDecision !== undefined ? <DecisionRecap decision={lastDecision} /> : null}
-        <p className="story-body">{page.body}</p>
+        <StoryBody body={page.body} />
         <MobileSceneFlow page={page} lastDecision={lastDecision} />
       </div>
       <ChoicePanel choices={page.choices} onChoose={onChoose} turnCount={turnCount} />
@@ -59,10 +59,20 @@ function AccentStrip({ assetPaths }: { readonly assetPaths: readonly string[] })
 }
 
 function FocusLine({ page }: { readonly page: GamePage }) {
-  if (page.kind !== "story") {
-    return <p className="focus-line">결말에 도착했다. 다시 시작하면 다른 선택이 열린다.</p>
+  if (page.kind === "story") {
+    return null
   }
-  return <p className="focus-line">{page.narrativeFunction}</p>
+  return <p className="focus-line">책장은 닫혔지만, 아직 다른 길의 온기가 남아 있다.</p>
+}
+
+function StoryBody({ body }: { readonly body: string }) {
+  return (
+    <div className="story-body">
+      {splitParagraphs(body).map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </div>
+  )
 }
 
 function MobileSceneFlow({
@@ -100,13 +110,11 @@ function MobileSceneFlow({
 
 function buildSceneBeats(page: GamePage, lastDecision: ChoiceConsequence | undefined): SceneBeats {
   const lines: string[] = []
-  if (page.kind === "story") {
-    lines.push(page.narrativeFunction)
-  } else {
-    lines.push("결말에 도착했다. 다시 시작하면 다른 선택이 열린다.")
+  if (page.kind !== "story") {
+    lines.push("책장은 닫혔지만, 아직 다른 길의 온기가 남아 있다.")
   }
   if (lastDecision !== undefined) {
-    lines.push(`방금 선택: ${lastDecision.action}`)
+    lines.push(`몸은 이미 움직였다. ${lastDecision.action}.`)
     lines.push(lastDecision.result)
   }
   lines.push(...splitReadableBeats(page.body))
@@ -118,7 +126,7 @@ function groupSceneLines(lines: readonly string[], fallback: string): SceneBeats
   const readableLines = lines.map((line) => line.trim()).filter((line) => line.length > 0)
   const groupCount = Math.min(
     MAX_MOBILE_SCENE_BEATS,
-    Math.max(1, Math.floor(readableLines.length / 2)),
+    Math.max(1, readableLines.length >= MAX_MOBILE_SCENE_BEATS ? MAX_MOBILE_SCENE_BEATS : 1),
   )
   const baseSize = Math.floor(readableLines.length / groupCount)
   const biggerGroupCount = readableLines.length % groupCount
@@ -141,9 +149,16 @@ function groupSceneLines(lines: readonly string[], fallback: string): SceneBeats
 
 function splitReadableBeats(body: string): readonly string[] {
   return body
-    .split(/(?<=[.!?。？！.])\s+/u)
+    .split(/\n{2,}|(?<=[.!?。？！.])\s+/u)
     .map((beat) => beat.trim())
     .filter((beat) => beat.length > 0)
+}
+
+function splitParagraphs(body: string): readonly string[] {
+  return body
+    .split(/\n{2,}/u)
+    .map((paragraph) => paragraph.trim())
+    .filter((paragraph) => paragraph.length > 0)
 }
 
 function nextSceneIndex(current: number, length: number): number {
@@ -161,11 +176,12 @@ type ChoicePanelProps = {
 
 function ChoicePanel({ choices, onChoose, turnCount }: ChoicePanelProps) {
   return (
-    <nav className="choice-panel" aria-label="선택지" data-turn-count={turnCount}>
+    <nav className="choice-panel" aria-label="갈림길" data-turn-count={turnCount}>
       {choices.map((choice) => (
         <button
           type="button"
           className={`choice-button tone-${choice.tone}`}
+          data-choice-target={choice.targetId}
           key={choice.id}
           onClick={() => onChoose(choice)}
         >
@@ -178,19 +194,19 @@ function ChoicePanel({ choices, onChoose, turnCount }: ChoicePanelProps) {
 
 function DecisionRecap({ decision }: { readonly decision: ChoiceConsequence }) {
   return (
-    <section className="decision-recap" aria-label="방금 선택한 행동">
+    <section className="decision-recap" aria-label="방금 몸이 향한 곳">
       <p>
-        선택: <strong data-testid="last-decision">{decision.action}</strong>
+        몸은 이미 움직였다. <strong data-testid="last-decision">{decision.action}</strong>.
       </p>
       <p data-testid="last-consequence">{decision.result}</p>
     </section>
   )
 }
 
-function endingToneLabel(kind: GamePage["kind"]): string {
+type EndingKind = Exclude<GamePage["kind"], "story">
+
+function endingToneLabel(kind: EndingKind): string {
   switch (kind) {
-    case "story":
-      return "진행 중"
     case "good":
       return "굿 엔딩"
     case "bad":
