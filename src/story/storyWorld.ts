@@ -2,6 +2,7 @@ import {
   withAndParticle,
   withCopulaParticle,
   withDirectionParticle,
+  withObjectParticle,
   withSubjectParticle,
 } from "./korean"
 import { pick } from "./shared"
@@ -10,15 +11,6 @@ import { type ArrivalScene, type Chapter, type StoryRoute, storyRoutes } from ".
 
 const CHAPTER_SIZE = 16
 const FIRST_GENERATED_PAGE = 6
-
-const sceneBeats = [
-  "(타닥...) 뒤쪽 발자국들이 발목을 잡는다. 앞길은 딱 한 칸 열린다.",
-  "(킁킁...) 달큰한 탄내가 낮게 번진다. 누가 먼저 흔들리는지 보인다.",
-  "(철컥...) 바게트가 칼처럼 빛난다. 손잡이는 이상하게 따뜻하다.",
-  "(스윽...) 도망칠 틈은 보인다. 대신 누군가 그 자리에 선다.",
-  "(콕.) 작은 표시 하나가 큰 문 앞에서 버틴다.",
-  "(후우...) 숨을 고르는 사이에도 책장은 혼자 넘어가지 않는다.",
-]
 
 export function storyTitle(number: number): string {
   const prequel = prequelTitle(number)
@@ -39,19 +31,9 @@ export function storyBody(number: number): string {
 
   const chapter = chapterFor(number)
   const scene = arrivalForPage(number)
-  const beat = pick(sceneBeats, number)
-  const lead = firstPerson(scene.lead)
-  const pressure = firstPerson(scene.pressure)
-  const reward = firstPerson(scene.reward)
-  return `${arrivalOpening(chapter, scene)}
+  const variant = number % 6
 
-${pick(["(슈슉...)", "(바삭.)", "(타닥타닥...)", "(스윽...)"], number)} ${lead}.
-${plotPressure(chapter, scene)}
-"잠깐. 단서는 ${withCopulaParticle(scene.keyword)}겠는걸..?" ${withSubjectParticle(chapter.ally)} 말한다.
-
-${reward}.
-${pressure}.
-${beat}`
+  return buildVariedBody(chapter, scene, number, variant)
 }
 
 export function narrativeFunction(number: number): string {
@@ -184,12 +166,165 @@ function titleForScene(chapter: Chapter, scene: ArrivalScene, number: number): s
   }
 }
 
+// ─── Varied body builder ─────────────────────────────────────────────────
+// Each body contains: action, keyword, ally, threat, goal, "겠는걸" hint.
+// 6 patterns, each compact (target: 110-290 Korean chars).
+
+function buildVariedBody(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  number: number,
+  variant: number,
+): string {
+  const lead = firstPerson(scene.lead)
+  const pressure = firstPerson(scene.pressure)
+  const reward = firstPerson(scene.reward)
+  const allyHint = pick([
+    `"${withCopulaParticle(scene.keyword)}겠는걸.." ${withSubjectParticle(chapter.ally)} 말한다.`,
+    `${withSubjectParticle(chapter.ally)}가 ${withObjectParticle(scene.keyword)} 가리킨다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+    `"${withCopulaParticle(scene.keyword)}겠는걸. 가자." ${withSubjectParticle(chapter.ally)}가 속삭인다.`,
+    `${withSubjectParticle(chapter.ally)}가 끄덕인다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+    `"저게 ${chapter.goal}의 열쇠야. ${withCopulaParticle(scene.keyword)}겠는걸." ${withSubjectParticle(chapter.ally)}가 말한다.`,
+    `${withSubjectParticle(chapter.ally)}가 낮게 말한다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+  ], number)
+
+  switch (variant) {
+    case 0:
+      return buildPatternA(chapter, scene, lead, pressure, reward, allyHint)
+    case 1:
+      return buildPatternB(chapter, scene, lead, pressure, reward, allyHint)
+    case 2:
+      return buildPatternC(chapter, scene, lead, pressure, reward, allyHint)
+    case 3:
+      return buildPatternD(chapter, scene, lead, pressure, reward, allyHint)
+    case 4:
+      return buildPatternE(chapter, scene, lead, pressure, reward, number, allyHint)
+    default:
+      return buildPatternF(chapter, scene, lead, pressure, reward, allyHint)
+  }
+}
+
+// Pattern A: Action → Lead + Ally hint → Reward → Pressure + Goal → Hook
+function buildPatternA(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  allyHint: string,
+): string {
+  return `${arrivalOpening(chapter, scene)}
+
+${lead}. ${allyHint}
+${reward}. ${textureLine(chapter)}
+
+${pressure}. ${chapter.goal}, ${chapter.threat}도 쉬지 않는다.
+${arrivalHook(chapter, scene)}`
+}
+
+// Pattern B: Opening → Sensory + Lead → Ally hint → Reward + Pressure + Goal
+function buildPatternB(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  allyHint: string,
+): string {
+  return `${arrivalOpening(chapter, scene)}
+
+${sensoryOpening(scene, chapter)}. ${lead}.
+${allyHint}
+${reward}. ${pressure}. ${chapter.goal}, ${chapter.threat}도 가까이.`
+}
+
+// Pattern C: Ally hint first → Opening + Lead → Pressure → Reward + Goal → Hook
+function buildPatternC(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  allyHint: string,
+): string {
+  return `${allyHint}
+${arrivalOpening(chapter, scene)} ${lead}.
+
+${pressure}. ${reward}. ${chapter.goal}, ${chapter.threat}도 온다.
+${textureLine(chapter)}
+${arrivalHook(chapter, scene)}`
+}
+
+// Pattern D: Opening → Quiet → Threat → Pressure → Ally + Reward + Goal
+function buildPatternD(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  allyHint: string,
+): string {
+  return `${arrivalOpening(chapter, scene)}
+
+${chapter.location}, 잠시 조용해진다. ${lead}.
+…그리고 ${withSubjectParticle(chapter.threat)} 움직인다.
+${pressure}.
+
+${allyHint} ${reward}. ${chapter.goal}이 멀지 않다. ${textureLine(chapter)}
+${arrivalHook(chapter, scene)}`
+}
+
+// Pattern E: Memory → Opening + Lead → Ally hint → Pressure → Reward + Goal → Hook
+function buildPatternE(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  number: number,
+  allyHint: string,
+): string {
+  const chapterIndex = chapters.indexOf(chapter)
+  const isFirstChapter = chapterIndex <= 0
+  const prevArc = chapterIndex > 0 && chapters[chapterIndex - 1] ? chapters[chapterIndex - 1]!.arc : chapter.arc
+  const memoryLine = isFirstChapter
+    ? "편의점에서 바게트가 따뜻했던 그 순간이 스친다."
+    : `지나온 ${prevArc}의 기억이 발밑에서 아직 가라앉지 않았다.`
+
+  return `${memoryLine}
+${arrivalOpening(chapter, scene)} ${lead}.
+
+${allyHint} ${pressure}.
+${reward}. ${chapter.goal}, ${chapter.threat}도 움직인다. ${textureLine(chapter)}
+${arrivalHook(chapter, scene)}`
+}
+
+// Pattern F: Opening → Lead + Ally → Reward → Pressure + Goal → Hook
+function buildPatternF(
+  chapter: Chapter,
+  scene: ArrivalScene,
+  lead: string,
+  pressure: string,
+  reward: string,
+  allyHint: string,
+): string {
+  return `${arrivalOpening(chapter, scene)}
+
+${lead}. ${allyHint}
+${reward}.
+
+${pressure}. ${chapter.goal}, ${chapter.threat}도 가까워진다. ${textureLine(chapter)}
+${arrivalHook(chapter, scene)}`
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────
+
 function arrivalOpening(chapter: Chapter, scene: ArrivalScene): string {
   switch (scene.route) {
     case "front":
       return `${scene.action}. ${withSubjectParticle(chapter.threat)} 반응하고, ${chapter.location}의 길이 둘로 갈라진다.`
     case "clue":
-      return `${scene.action}. ${scene.keyword} 흔적이 ${withAndParticle(chapter.clue)} 이어지며, ${chapter.goal}의 이유가 보인다.`
+      return `${scene.action}. ${scene.keyword} 흔적이 ${withAndParticle(chapter.clue)} 이어진다.`
     case "heart":
       return `${scene.action}. ${withSubjectParticle(chapter.ally)} 고개를 끄덕이고, ${chapter.goal}이 사람들의 일이 된다.`
     default:
@@ -197,17 +332,39 @@ function arrivalOpening(chapter: Chapter, scene: ArrivalScene): string {
   }
 }
 
-function plotPressure(chapter: Chapter, scene: ArrivalScene): string {
-  switch (scene.route) {
-    case "front":
-      return `${chapter.goal}은 아직 멀다. ${withDirectionParticle(chapter.bridge)} 가야 하지만, 힘만 쓰면 길이 더 막힌다.`
-    case "clue":
-      return `${withDirectionParticle(chapter.bridge)} 가는 실마리는 보인다. 틀리면 ${withSubjectParticle(chapter.threat)} 먼저 따라온다.`
-    case "heart":
-      return `${withDirectionParticle(chapter.bridge)} 가려면, 이 사람들을 두고 갈 수 없다는 사실이 먼저 선다.`
-    default:
-      return assertNever(scene.route)
-  }
+function sensoryOpening(scene: ArrivalScene, chapter: Chapter): string {
+  const senses = [
+    `(킁킁...) ${chapter.location}에서 낯선 냄새가 올라온다`,
+    `(스윽...) ${chapter.location}의 바람이 바게트를 흔든다`,
+    `(타닥...) ${chapter.location} 어디선가 발소리가 울린다`,
+    `(철컥...) ${chapter.location}의 문이 하나 삐걱거린다`,
+    `(콕.) ${chapter.location} 바닥에 낯선 표식이 보인다`,
+    `(후우...) ${chapter.location}의 공기가 무거워졌다`,
+  ]
+  return pick(senses, chapters.indexOf(chapter) * 6 + ["front", "clue", "heart"].indexOf(scene.route))
+}
+
+function textureLine(chapter: Chapter): string {
+  return pick([
+    `…`,
+    `…`,
+    `?`,
+    `…`,
+    `?`,
+    `…`,
+  ], chapters.indexOf(chapter))
+}
+
+function arrivalHook(chapter: Chapter, scene: ArrivalScene): string {
+  const hooks = [
+    `지금 결정해야 한다. ${scene.keyword} 앞에서 갈림길이 열린다.`,
+    `${withSubjectParticle(scene.keyword)}의 흔적이 사라지기 전에 길을 골라야 한다.`,
+    `${withSubjectParticle(chapter.threat)} 가까워진다. 어느 쪽으로 발을 디뎌야 할까?`,
+    `바게트가 손에서 따뜻해진다. ${withSubjectParticle(scene.keyword)} 어떤 방향을 가리키고 있다.`,
+    `${chapter.location}의 길이 지금 열려 있다. ${scene.keyword} 앞에서 멈춘다.`,
+    `${withSubjectParticle(scene.keyword)} 잡은 순간, ${chapter.bridge} 쪽으로 두 갈래 길이 보인다.`,
+  ]
+  return pick(hooks, chapters.indexOf(chapter) * 3 + ["front", "clue", "heart"].indexOf(scene.route))
 }
 
 function firstPerson(copy: string): string {

@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npx tsc --noEmit && node -e \"const{build}=require('vite');build({mode:'production'}).then(()=>process.exit(0))\"",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install"
+}

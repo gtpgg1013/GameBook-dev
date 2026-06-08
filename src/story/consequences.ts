@@ -26,7 +26,7 @@ export function consequenceFor(label: string, tone: Choice["tone"]): string {
 export function consequenceForArrival(scene: ArrivalScene): string {
   switch (scene.route) {
     case "front":
-      return `(탁!) ${scene.keyword}부터 밀어붙인다. "좋아, 길이 열리네." ${scene.reward}.`
+      return `(탁!) ${scene.keyword}부터 밀어붙인다. 길이 열린다. ${scene.reward}.`
     case "clue":
       return `(사각...) ${withObjectParticle(scene.keyword)} 다시 본다. "이거 그냥 장식 아니잖아?" ${scene.reward}.`
     case "heart":
