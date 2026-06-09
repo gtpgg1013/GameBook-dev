@@ -174,7 +174,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 그녀의 수레에는 평범하지 않은 빵이 있었다 — 글자가 새겨진 빵, 지도가 그려진 빵, 그리고 아직 부풀지 않은 빵.
 
 "새로운 독자구나."
-마들렌이 당신 손의 바게트를 보고 말했다.
+마들렌이 당신 손에 든 것을 보고 말했다.
 "그 검은 용도가 정해져 있지 않아. 네가 어떻게 쓰느냐에 따라 칼이 되기도, 식탁 위 빵이 되기도 하지."
 
 그녀가 항구 쪽을 가리켰다. 식빵 방패병 하나가 포자 덫에 걸려 신음하고 있었다…`,closingHook:`방패병의 신음 소리가 점점 커진다. 결정해야 할 때다.`,narrativeFunction:`낯선 빵마을에서 내가 한 행동이 다음 사람의 길을 바꾼다.`,choices:[`마들렌의 지도 빵을 자세히 본다`,`항구 쪽 방패병에게 달려간다`],incomingFrom:[{fromPage:1,choiceLabel:`빵집 밖으로 나가 본다`},{fromPage:2,choiceLabel:`빵칼 중 하나를 집어 든다`},{fromPage:3,choiceLabel:`문지기에게 이름을 밝힌다`}]},{page:5,title:`항구의 첫 선택`,body:`크루아상 항구에 도착했다. 전쟁 직전의 마을이었다.
