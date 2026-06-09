@@ -12,6 +12,16 @@ import { type ArrivalScene, type Chapter, type StoryRoute, storyRoutes } from ".
 const CHAPTER_SIZE = 16
 const FIRST_GENERATED_PAGE = 6
 
+type Phase = "intro" | "develop" | "crisis" | "climax"
+
+function phaseInChapter(number: number): Phase {
+  const pos = (number - 1) % CHAPTER_SIZE
+  if (pos < 4) return "intro"
+  if (pos < 8) return "develop"
+  if (pos < 12) return "crisis"
+  return "climax"
+}
+
 export function storyTitle(number: number): string {
   const prequel = prequelTitle(number)
   if (prequel !== undefined) return prequel
@@ -32,7 +42,13 @@ export function narrativeFunction(number: number): string {
   if (number <= 5) return "낯선 빵마을에서 내가 한 행동이 다음 사람의 길을 바꾼다."
   const chapter = chapterFor(number)
   const scene = arrivalForPage(number)
-  return `${scene.action} 뒤, ${scene.keyword}의 흔적이 ${withDirectionParticle(chapter.bridge)} 이어진다.`
+  const phase = phaseInChapter(number)
+  switch (phase) {
+    case "intro": return `${scene.action}. ${chapter.location}에서 ${withDirectionParticle(chapter.bridge)} 향한다.`
+    case "develop": return `${scene.action} 뒤, ${scene.keyword}의 흔적이 ${withDirectionParticle(chapter.bridge)} 이어진다.`
+    case "crisis": return `${chapter.threat}가 가까워진다. ${scene.keyword} 앞에서 숨을 고른다.`
+    case "climax": return `${chapter.goal}. ${withSubjectParticle(scene.keyword)} 빛나고 ${withDirectionParticle(chapter.bridge)} 마지막 걸음이 남았다.`
+  }
 }
 
 export function chapterFor(number: number): Chapter {
@@ -123,9 +139,97 @@ function titleForScene(chapter: Chapter, scene: ArrivalScene, number: number): s
   }
 }
 
-// ─── Scene builder — narrative-first approach ─────────────────────────────
-// Every variant opens with scene.action so the choice→arrival bridge is clear.
-// Closing lines use chapter-specific sensory detail instead of generic cliffhangers.
+// ─── Phase-aware opening line ─────────────────────────────────────────────
+
+function openingLine(chapter: Chapter, scene: ArrivalScene, number: number): string {
+  const phase = phaseInChapter(number)
+  const k = scene.keyword
+  const loc = chapter.location
+  const v = number % 6
+  const openings: Record<Phase, readonly string[]> = {
+    intro: [
+      `${scene.action}. ${loc}의 공기가 처음 느껴진다.`,
+      `${scene.action}. 낯선 ${k}가 시선을 끈다.`,
+      `${scene.action}. 발을 딛자 ${loc}의 바람이 바뀐다.`,
+      `${scene.action}. ${k}에서 처음 보는 빛이 난다.`,
+      `${scene.action}. ${loc}에 첫 발을 내딛는다.`,
+      `${scene.action}. ${k} 앞에서 한 발 멈춘다.`,
+    ],
+    develop: [
+      `${scene.action}. ${k} 주변으로 빵 부스러기가 흩어진다.`,
+      `${scene.action}. ${loc}에서 바람이 바뀐다.`,
+      `${scene.action}. 발밑에서 ${k}의 흔적이 이어진다.`,
+      `${scene.action}. 어딘가에서 갓 구운 냄새가 올라온다…`,
+      `${scene.action}. ${k} 앞에서 잠시 숨을 고른다.`,
+      `${scene.action}. ${withSubjectParticle(k)} 반긴다. 하지만 그 뒤에 그림자가 숨어 있다.`,
+    ],
+    crisis: [
+      `${scene.action}. ${chapter.threat}가 바로 코앞이다.`,
+      `${scene.action}. ${withSubjectParticle(chapter.threat)} 길을 막는다.`,
+      `${scene.action}. 바게트가 뜨거워진다… ${withSubjectParticle(chapter.threat)} 가깝다.`,
+      `${scene.action}. ${loc} 전체가 긴장으로 얼어붙는다.`,
+      `${scene.action}. ${k}가 위험하게 흔들린다.`,
+      `${scene.action}. ${chapter.threat}의 그림자가 ${k}를 삼킨다.`,
+    ],
+    climax: [
+      `${scene.action}. ${chapter.goal}이 보이기 시작한다.`,
+      `${scene.action}. ${withDirectionParticle(chapter.bridge)} 마지막 걸음이 남았다.`,
+      `${scene.action}. ${withSubjectParticle(chapter.ally)} 마지막 손짓을 한다.`,
+      `${scene.action}. ${k} 끝에서 빛이 번진다.`,
+      `${scene.action}. ${loc}이 한 번 더 숨을 쉰다.`,
+      `${scene.action}. ${chapter.goal}은 지금 이 순간에 달려 있다.`,
+    ],
+  }
+  return pick(openings[phase], v)
+}
+
+// ─── Phase-aware closing line ─────────────────────────────────────────────
+
+function closingLine(chapter: Chapter, scene: ArrivalScene, number: number): string {
+  const phase = phaseInChapter(number)
+  const t = chapter.threat
+  const b = chapter.bridge
+  const k = scene.keyword
+  const a = chapter.ally
+  const v = number % 6
+  const closings: Record<Phase, readonly string[]> = {
+    intro: [
+      `…이곳 ${chapter.location}의 바람이 아직 낯설다.`,
+      `…${withSubjectParticle(k)} 처음 보는 무늬를 새기고 있다.`,
+      `${a}의 목소리가 멀리서 들린다… 따라갈까?`,
+      `…${chapter.location}은 조용하지만, 어딘가 ${t}의 기척이 있다.`,
+      `…${k}에서 이상한 냄새가 올라온다. 처음 맡는 향이다.`,
+      `…아직 ${chapter.arc}의 시작일 뿐이다. 발걸음을 내딛는다.`,
+    ],
+    develop: [
+      `…${k} 뒤에서 ${t}의 그림자가 일렁인다.`,
+      `${withSubjectParticle(a)} 손짓이 급해졌다… 어서 움직여야 한다.`,
+      `…${b} 너머로 두 가닥 길이 빛난다.`,
+      `발소리가 사라졌다… 아니, 멈춘 거다. ${withSubjectParticle(t)} 가까이 와 있다.`,
+      `…${withSubjectParticle(k)} 지나면 돌아올 수 없다. 마음을 정해야 한다.`,
+      `바람이 ${t}의 냄새를 실어온다… 어느 쪽으로 몸을 돌릴까?`,
+    ],
+    crisis: [
+      `${t}가 포위한다… 뚫고 나갈 틈이 하나 있다.`,
+      `${a}의 비명이 짧게 울린다…!`,
+      `…바게트가 검게 변한다. ${t}의 영향이다.`,
+      `${chapter.location} 전체가 ${t} 쪽으로 기운다… 한 발만 버티면.`,
+      `…시간이 없다. ${withSubjectParticle(t)} 문을 닫기 전에 움직여야 한다.`,
+      `내 숨이 가빠진다… ${t}가 공포를 먹고 있다.`,
+    ],
+    climax: [
+      `${a}가 미소 짓는다. "${chapter.goal}… 이제 한 발 남았어."`,
+      `…${b}가 열린다. 다음 장이 기다리고 있다.`,
+      `…${withSubjectParticle(k)} 빛나며 마지막 길을 가리킨다.`,
+      `…해냈다. ${withDirectionParticle(b)} 이어진다.`,
+      `…${a}의 눈빛이 묻는다—${b}로 갈까?`,
+      `…바게트가 따뜻해진다. ${chapter.arc}를 지나왔다.`,
+    ],
+  }
+  return pick(closings[phase], v)
+}
+
+// ─── Scene builder ────────────────────────────────────────────────────────
 
 function buildScene(chapter: Chapter, scene: ArrivalScene, number: number): string {
   const lead = firstPerson(scene.lead)
@@ -140,92 +244,51 @@ function buildScene(chapter: Chapter, scene: ArrivalScene, number: number): stri
   }
 }
 
-// ─── Opening line — expands the choice action with sensory/setting detail ──
-
-function openingLine(chapter: Chapter, scene: ArrivalScene, number: number): string {
-  const v = number % 6
-  const k = scene.keyword
-  const loc = chapter.location
-  const openings = [
-    `${scene.action}. ${k} 주변으로 빵 부스러기가 흩어진다.`,
-    `${scene.action}. ${loc}에서 바람이 바뀐다.`,
-    `${scene.action}. 발밑에서 ${k}의 흔적이 이어진다.`,
-    `${scene.action}. 어딘가에서 갓 구운 냄새가 올라온다…`,
-    `${scene.action}. ${k} 앞에서 잠시 숨을 고른다.`,
-    `${scene.action}. ${withSubjectParticle(k)} 반긴다. 하지만 그 뒤에 그림자가 숨어 있다.`,
-  ]
-  return pick(openings, v)
-}
-
-// ─── Dynamic closing lines — diverse sensory & character-based endings ───
-
-function closingLine(chapter: Chapter, scene: ArrivalScene, number: number): string {
-  const v = number % 12
-  const t = chapter.threat
-  const b = chapter.bridge
-  const k = scene.keyword
-  const a = chapter.ally
-  const closings = [
-    `…${k} 뒤에서 ${t}의 그림자가 일렁인다.`,
-    `${withSubjectParticle(a)} 손짓이 급해졌다… 어서 움직여야 한다.`,
-    `…${b} 너머로 두 가닥 길이 빛난다.`,
-    `발소리가 사라졌다… 아니, 멈춘 거다. ${withSubjectParticle(t)} 가까이 와 있다.`,
-    `…${withSubjectParticle(k)} 지나면 돌아올 수 없다. 마음을 정해야 한다.`,
-    `바람이 ${t}의 냄새를 실어온다… 어느 쪽으로 몸을 돌릴까?`,
-    `…빵 부스러기가 ${b} 쪽으로 흩어진다. 하나를 골라야 한다.`,
-    `내 바게트가 뜨거워졌다… ${withSubjectParticle(t)} 반응이다! 지금 결정해야 한다.`,
-    `${a}의 눈빛이 묻는다—\"이 길, 맞는 거지?\"`,
-    `…${withSubjectParticle(k)} 둘러싼 공기가 달라졌다. 마음을 정해야 한다.`,
-    `${t}의 그림자가 두 갈래로 갈라진다… 한쪽은 ${b} 쪽이다.`,
-    `…누군가 내 이름을 불렀다. ${a}일까, ${t}일까? 발을 내딛어야 한다.`,
-  ]
-  return pick(closings, v)
-}
-
 // ─── FRONT: action-driven, heroic entry ───────────────────────────────────
 
 function buildFront(
   chapter: Chapter, scene: ArrivalScene,
   lead: string, pressure: string, reward: string, number: number,
 ): string {
-  const v = number % 5
-  switch (v) {
-    case 0: return `${openingLine(chapter, scene, number)}
+  const phase = phaseInChapter(number)
+  const hint = frontHint(chapter, scene)
+  const ally = withSubjectParticle(chapter.ally)
+  const goal = chapter.goal
+  const op = openingLine(chapter, scene, number)
+  const cl = closingLine(chapter, scene, number)
+
+  switch (phase) {
+    case "intro":
+      return `${op}
+${lead}. ${chapter.location}의 첫인상이 남다. ${withSubjectParticle(chapter.threat)} 어딘가 숨어 있다.
+
+…${ally} 조용히 다가온다. "${hint}겠는걸."
+${pressure}. ${goal}이 아직 멀다.
+${cl}`
+
+    case "develop":
+      return `${op}
 ${lead}. ${pressure}.
 
-…${withSubjectParticle(chapter.ally)} 빈틈을 봤다. "${frontHint(chapter, scene)}겠는걸."
-${reward}. ${chapter.goal}. ${withSubjectParticle(chapter.threat)} 온다.
-${closingLine(chapter, scene, number)}`
+…${ally} 빈틈을 봤다. "${hint}겠는걸."
+${reward}. ${goal}. ${withSubjectParticle(chapter.threat)} 아직 멀지 않다.
+${cl}`
 
-    case 1: return `${openingLine(chapter, scene, number)}
-…${withSubjectParticle(chapter.threat)} 움직인다. ${pressure}.
+    case "crisis":
+      return `${op}
+${pressure}. ${withSubjectParticle(chapter.threat)} 온다.
 
+"${hint}겠는걸." ${ally} 급하게 속삭인다.
 ${lead}. ${reward}.
-"${frontHint(chapter, scene)}겠는걸. 서두르자." ${withSubjectParticle(chapter.ally)} 속삭인다.
-${chapter.goal}. 그 전에 ${chapter.threat}.
-${closingLine(chapter, scene, number)}`
+${cl}`
 
-    case 2: return `${openingLine(chapter, scene, number)}
-"${frontHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 입을 연다.
+    case "climax":
+      return `${op}
+${reward}. ${lead}.
 
-${pressure}. ${lead}.
-${reward}. ${chapter.goal}, ${withSubjectParticle(chapter.threat)} 가깝다.
-${closingLine(chapter, scene, number)}`
-
-    case 3: return `${openingLine(chapter, scene, number)}
-${withSubjectParticle(chapter.threat)} 막아 섰다. ${pressure}.
-${memLine(chapter, number)}.
-
-${lead}. ${withSubjectParticle(chapter.ally)} 끄덕인다. "${frontHint(chapter, scene)}겠는걸."
-${reward}.
-${chapter.goal}. ${closingLine(chapter, scene, number)}`
-
-    default: return `${openingLine(chapter, scene, number)}
-${lead}. ${pressure}.
-
-${withSubjectParticle(chapter.ally)} 낮게 말한다. "${frontHint(chapter, scene)}겠는걸."
-${reward}. ${withSubjectParticle(chapter.threat)} 먼저다. ${chapter.goal}은 다음.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 나직이 말한다.
+${goal}. ${withSubjectParticle(chapter.threat)} 물러났다. ${withDirectionParticle(chapter.bridge)} 이어진다.
+${cl}`
   }
 }
 
@@ -235,93 +298,97 @@ function buildClue(
   chapter: Chapter, scene: ArrivalScene,
   lead: string, pressure: string, reward: string, number: number,
 ): string {
-  const v = number % 5
-  switch (v) {
-    case 0: return `${openingLine(chapter, scene, number)}
+  const phase = phaseInChapter(number)
+  const hint = clueHint(chapter, scene)
+  const ally = withSubjectParticle(chapter.ally)
+  const goal = chapter.goal
+  const op = openingLine(chapter, scene, number)
+  const cl = closingLine(chapter, scene, number)
+
+  switch (phase) {
+    case "intro":
+      return `${op}
+${withObjectParticle(scene.keyword)} 자세히 보니 빛이 다르다. ${chapter.threat}의 기척이 희미하다.
+
+${lead}. "${hint}겠는걸." ${ally} 속삭인다.
+${pressure}. ${goal}의 실마리가 여기에 있다.
+${cl}`
+
+    case "develop":
+      return `${op}
 ${lead}. ${pressure}.
 
-…${withSubjectParticle(chapter.ally)} 조용히 다가온다. "${clueHint(chapter, scene)}겠는걸."
-${reward}. ${chapter.goal}. ${withSubjectParticle(chapter.threat)} 쉬지 않는다.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 앞을 가리킨다.
+${reward}. ${goal}. ${chapter.threat}은 아직 여기 있다.
+${cl}`
 
-    case 1: return `${openingLine(chapter, scene, number)}
-${pressure}. ${lead}.
+    case "crisis":
+      return `${op}
+${pressure}. 단서가 ${chapter.threat} 쪽으로 흘러간다.
 
-"${clueHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 속삭인다.
-${reward}. ${chapter.goal}, ${withSubjectParticle(chapter.threat)} 가깝다.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 조급해진다.
+${lead}. ${reward}. ${goal}이 멀어지기 전에.
+${cl}`
 
-    case 2: return `${openingLine(chapter, scene, number)}
-"${clueHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 입을 연다.
+    case "climax":
+      return `${op}
+${reward}. ${lead}.
 
-${lead}. ${pressure}.
-${reward}. ${chapter.goal}. 그 전에 ${chapter.threat}.
-${closingLine(chapter, scene, number)}`
-
-    case 3: return `${openingLine(chapter, scene, number)}
-${memLine(chapter, number)}.
-${pressure}. ${lead}.
-
-"${clueHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 끄덕인다.
-${reward}. ${chapter.goal}.
-${closingLine(chapter, scene, number)}`
-
-    default: return `${openingLine(chapter, scene, number)}
-${lead}. ${pressure}.
-
-${withSubjectParticle(chapter.ally)} 앞을 가리킨다. "${clueHint(chapter, scene)}겠는걸."
-${reward}. ${withSubjectParticle(chapter.threat)} 먼저다. ${chapter.goal}은 다음.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 끄덕인다.
+${goal}. ${withSubjectParticle(chapter.threat)} 물러났다. ${withDirectionParticle(chapter.bridge)} 이어진다.
+${cl}`
   }
 }
 
-// ─── HEART: compassion, connection, reward through kindness ───────────────
+// ─── HEART: compassion, connection ────────────────────────────────────────
 
 function buildHeart(
   chapter: Chapter, scene: ArrivalScene,
   lead: string, pressure: string, reward: string, number: number,
 ): string {
-  const v = number % 5
-  switch (v) {
-    case 0: return `${openingLine(chapter, scene, number)}
+  const phase = phaseInChapter(number)
+  const hint = heartHint(chapter, scene)
+  const ally = withSubjectParticle(chapter.ally)
+  const goal = chapter.goal
+  const op = openingLine(chapter, scene, number)
+  const cl = closingLine(chapter, scene, number)
+
+  switch (phase) {
+    case "intro":
+      return `${op}
+${lead}. 도움이 필요한 손이 보인다. ${chapter.threat}도 가까이 있다.
+
+"${hint}겠는걸." ${ally} 나직이 말한다.
+${pressure}. ${goal}도 중요하지만 지금은 이 사람이 먼저다.
+${cl}`
+
+    case "develop":
+      return `${op}
 ${lead}. ${pressure}.
 
-"${heartHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 속삭인다.
-${reward}. ${chapter.goal}. ${withSubjectParticle(chapter.threat)} 온다.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 속삭인다.
+${reward}. ${goal}. ${chapter.threat}을 잊으면 안 된다.
+${cl}`
 
-    case 1: return `${openingLine(chapter, scene, number)}
-${pressure}. ${lead}.
+    case "crisis":
+      return `${op}
+${pressure}. 돕다가 ${withSubjectParticle(chapter.threat)} 더 가까워졌다.
 
-"${heartHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 나직이 말한다.
-${reward}. ${chapter.goal}, ${withSubjectParticle(chapter.threat)} 가깝다.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 걱정스럽다.
+${lead}. ${reward}.
+${cl}`
 
-    case 2: return `${openingLine(chapter, scene, number)}
-"${heartHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 입을 연다.
+    case "climax":
+      return `${op}
+${reward}. ${lead}.
 
-${lead}. ${pressure}.
-${reward}. ${chapter.goal}. 그 전에 ${chapter.threat}.
-${closingLine(chapter, scene, number)}`
-
-    case 3: return `${openingLine(chapter, scene, number)}
-${memLine(chapter, number)}.
-${pressure}. ${lead}.
-
-"${heartHint(chapter, scene)}겠는걸." ${withSubjectParticle(chapter.ally)} 끄덕인다.
-${reward}. ${chapter.goal}.
-${closingLine(chapter, scene, number)}`
-
-    default: return `${openingLine(chapter, scene, number)}
-${lead}. ${pressure}.
-
-${withSubjectParticle(chapter.ally)} 앞을 가리킨다. "${heartHint(chapter, scene)}겠는걸."
-${reward}. ${withSubjectParticle(chapter.threat)} 먼저다. ${chapter.goal}은 다음.
-${closingLine(chapter, scene, number)}`
+"${hint}겠는걸." ${ally} 미소 짓는다.
+${goal}. ${withSubjectParticle(chapter.threat)} 지나갔다. ${withDirectionParticle(chapter.bridge)} 이어진다.
+${cl}`
   }
 }
 
-// ─── Hint lines — different personality per route type ────────────────────
+// ─── Hint lines ───────────────────────────────────────────────────────────
 
 function frontHint(chapter: Chapter, scene: ArrivalScene): string {
   const selfRef = chapter.ally.includes(scene.keyword) || scene.keyword.includes(chapter.ally.split(" ").pop() ?? "")
