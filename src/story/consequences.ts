@@ -26,11 +26,11 @@ export function consequenceFor(label: string, tone: Choice["tone"]): string {
 export function consequenceForArrival(scene: ArrivalScene): string {
   switch (scene.route) {
     case "front":
-      return `(탁!) ${scene.keyword}부터 밀어붙인다. 길이 열린다. ${scene.reward}.`
+      return `(탁!) ${scene.keyword}부터 밀어붙인다. 길이 열린다. ${fp(scene.reward)}.`
     case "clue":
-      return `(사각...) ${withObjectParticle(scene.keyword)} 다시 본다. "이거 그냥 장식 아니잖아?" ${scene.reward}.`
+      return `(사각...) ${withObjectParticle(scene.keyword)} 다시 본다. "이거 그냥 장식 아니잖아?" ${fp(scene.reward)}.`
     case "heart":
-      return `(후우...) ${scene.keyword}부터 챙긴다. "사람부터 봐야지." ${scene.reward}.`
+      return `(후우...) ${scene.keyword}부터 챙긴다. "사람부터 봐야지." ${fp(scene.reward)}.`
     default:
       return assertNever(scene.route)
   }
@@ -86,6 +86,17 @@ function scriptedConsequence(label: string): string | undefined {
     default:
       return undefined
   }
+}
+
+function fp(copy: string): string {
+  return copy
+    .replaceAll("당신 이름","내 이름").replaceAll("당신 앞","내 앞")
+    .replaceAll("당신 옆","내 옆").replaceAll("당신 편","내 편")
+    .replaceAll("당신 몸짓","내 몸짓").replaceAll("당신 목소리","내 목소리")
+    .replaceAll("당신 뒤","내 뒤").replaceAll("당신 몫","내 몫")
+    .replaceAll("당신 대신","나 대신").replaceAll("당신 값을","내 값을")
+    .replaceAll("당신을","나를").replaceAll("당신이","내가")
+    .replaceAll("당신","나")
 }
 
 function assertNever(value: never): never {
