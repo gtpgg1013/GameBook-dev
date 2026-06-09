@@ -111,10 +111,14 @@ function prequelBody(number: number): string | undefined {
 // ─── Title builder ────────────────────────────────────────────────────────
 
 function titleForScene(chapter: Chapter, scene: ArrivalScene, number: number): string {
+  const selfRef = chapter.ally.includes(scene.keyword) || scene.keyword.includes(chapter.ally.split(" ").pop() ?? "")
   switch (scene.route) {
     case "front": return pick([`${scene.keyword} 앞에서 갈라진 ${chapter.arc}`,`${withDirectionParticle(chapter.bridge)} 튄 ${scene.keyword}`], number)
     case "clue": return `${withSubjectParticle(scene.keyword)} 가리킨 ${chapter.bridge}`
-    case "heart": return pick([`${scene.keyword} 곁에 멈춘 손`,`${withSubjectParticle(chapter.ally)} 기억한 ${scene.keyword}`], number)
+    case "heart": {
+      if (selfRef) return pick([`${chapter.bridge}에서 만난 손`, `${chapter.arc}의 작은 위로`], number)
+      return pick([`${scene.keyword} 곁에 멈춘 손`,`${withSubjectParticle(chapter.ally)} 기억한 ${scene.keyword}`], number)
+    }
     default: return assertNever(scene.route)
   }
 }
@@ -133,7 +137,7 @@ function buildScene(chapter: Chapter, scene: ArrivalScene, number: number): stri
 
   const intros = [
     // 0: action → sensory detail → ally speaks
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 ${lead}. ${sensory(chapter, number)}.
 ${allyLine(chapter, scene, 0)}
 
@@ -142,7 +146,7 @@ ${goalThreat(chapter, number)}.
 ${hookLine(chapter, scene, number)}`,
 
     // 1: quiet → sudden movement → discovery
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 
 ${chapter.location}, 한숨 돌린 틈에 ${lead.toLowerCase()}.
 …${withSubjectParticle(chapter.threat)} 움직인다.
@@ -154,7 +158,7 @@ ${hookLine(chapter, scene, number)}`,
 
     // 2: ally dialogue opens → scene fills in
     `${allyLine(chapter, scene, 2)}
-${arrivalOpen(chapter, scene)} ${lead}.
+${arrivalOpen(chapter, scene, number)} ${lead}.
 
 ${reward}.
 ${pressure}. ${goalThreat(chapter, number)}.
@@ -162,7 +166,7 @@ ${hookLine(chapter, scene, number)}`,
 
     // 3: memory → present moment → urgency
     `${memoryLine(chapter, number)}
-${arrivalOpen(chapter, scene)} ${lead}.
+${arrivalOpen(chapter, scene, number)} ${lead}.
 
 ${allyLine(chapter, scene, 3)}
 ${pressure}.
@@ -170,7 +174,7 @@ ${reward}. ${goalThreat(chapter, number)}.
 ${hookLine(chapter, scene, number)}`,
 
     // 4: visceral action → consequence → ally insight
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 
 ${lead}. ${sensory(chapter, number)}.
 ${allyLine(chapter, scene, 4)}
@@ -180,7 +184,7 @@ ${pressure}. ${goalThreat(chapter, number)}.
 ${hookLine(chapter, scene, number)}`,
 
     // 5: tension build → threat reveal → ally encouragement
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 
 ${pressure}. ${lead}.
 …${withSubjectParticle(chapter.threat)} 가까워졌다. ${allyLine(chapter, scene, 5)}
@@ -189,7 +193,7 @@ ${goalThreat(chapter, number)}.
 ${hookLine(chapter, scene, number)}`,
 
     // 6: discovery → wonder → danger
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 
 ${reward}. ${lead}.
 ${allyLine(chapter, scene, 6)}
@@ -200,14 +204,14 @@ ${hookLine(chapter, scene, number)}`,
 
     // 7: ally teaches → world expands → choice
     `${allyLine(chapter, scene, 7)}
-${arrivalOpen(chapter, scene)}
+${arrivalOpen(chapter, scene, number)}
 
 ${lead}. ${reward}.
 ${pressure}. ${goalThreat(chapter, number)}.
 ${hookLine(chapter, scene, number)}`,
 
     // 8: danger first → escape → ally hint
-    `${arrivalOpen(chapter, scene)}
+    `${arrivalOpen(chapter, scene, number)}
 
 …${withSubjectParticle(chapter.threat)} 노려본다. ${pressure}.
 ${lead}.
@@ -218,7 +222,7 @@ ${hookLine(chapter, scene, number)}`,
 
     // 9: reflective → forward motion
     `${memoryLine(chapter, number)}
-${arrivalOpen(chapter, scene)}
+${arrivalOpen(chapter, scene, number)}
 
 ${allyLine(chapter, scene, 9)}
 ${reward}. ${pressure}.
@@ -231,23 +235,54 @@ ${hookLine(chapter, scene, number)}`,
 
 // ─── Component builders ───────────────────────────────────────────────────
 
-function arrivalOpen(chapter: Chapter, scene: ArrivalScene): string {
+function arrivalOpen(chapter: Chapter, scene: ArrivalScene, number: number): string {
   switch (scene.route) {
-    case "front": return `${scene.action}. ${withSubjectParticle(chapter.threat)} 반응하고, ${chapter.location}의 길이 둘로 갈라진다.`
-    case "clue": return `${scene.action}. ${withSubjectParticle(scene.keyword)} 흔적이 바닥에 겹쳤다.`
-    case "heart": return `${scene.action}. ${withSubjectParticle(chapter.ally)} 고개를 끄덕이고, ${chapter.goal}이 사람들의 일이 된다.`
+    case "front": {
+      const fronts = [
+        `${scene.action}. ${withSubjectParticle(chapter.threat)} 반응하고, ${chapter.location}의 길이 둘로 갈라진다.`,
+        `${scene.action}. 이름을 밝히자 ${chapter.threat}의 갑옷이 반쯤 열렸다.`,
+        `${scene.action}. ${chapter.location} 앞에서 발걸음이 멈췄다.`,
+      ]
+      return pick(fronts, number)
+    }
+    case "clue": {
+      const clues = [
+        `${scene.action}. ${scene.keyword}의 흔적이 바닥에 겹쳤다.`,
+        `${scene.action}. ${withObjectParticle(scene.keyword)} 따라가니 숨겨진 길이 나타났다.`,
+        `${scene.action}. ${scene.keyword}에서 실마리가 하나 풀렸다.`,
+      ]
+      return pick(clues, number)
+    }
+    case "heart": {
+      const hearts = [
+        `${scene.action}. ${withSubjectParticle(chapter.ally)} 고개를 끄덕이고, ${chapter.goal}에 한 발 다가섰다.`,
+        `${scene.action}. 나눠 준 빵이 부족해 뒤쪽 줄이 술렁였다. ${withSubjectParticle(chapter.ally)} 나직이 말한다.`,
+        `${scene.action}. ${withSubjectParticle(chapter.ally)} 미소 지으며 길을 열어 줬다. ${chapter.goal}이 시작된다.`,
+      ]
+      return pick(hearts, number)
+    }
     default: return assertNever(scene.route)
   }
 }
 
 function allyLine(chapter: Chapter, scene: ArrivalScene, seed: number): string {
+  // When keyword overlaps with ally name, avoid self-reference
+  const selfRef = chapter.ally.includes(scene.keyword) || scene.keyword.includes(chapter.ally.split(" ").pop() ?? "")
+  if (selfRef) {
+    const safe = [
+      `"이쪽이겠는걸." ${withSubjectParticle(chapter.ally)} 속삭인다.`,
+      `${withSubjectParticle(chapter.ally)} 앞을 가리킨다. "이게 답이겠는걸."`,
+      `"서두르겠는걸." ${withSubjectParticle(chapter.ally)} 발걸음을 빠르게 한다.`,
+    ]
+    return pick(safe, seed)
+  }
   const lines = [
-    `"${withCopulaParticle(scene.keyword)}겠는걸." ${withSubjectParticle(chapter.ally)}가 입을 연다.`,
-    `${withSubjectParticle(chapter.ally)}가 ${withObjectParticle(scene.keyword)} 가리킨다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
-    `"${withCopulaParticle(scene.keyword)}겠는걸. 서두르자." ${withSubjectParticle(chapter.ally)}가 속삭인다.`,
-    `${withSubjectParticle(chapter.ally)}가 끄덕인다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
-    `"이게 열쇠야. ${withCopulaParticle(scene.keyword)}겠는걸." ${withSubjectParticle(chapter.ally)}가 말한다.`,
-    `${withSubjectParticle(chapter.ally)}가 낮게 말한다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+    `"${withCopulaParticle(scene.keyword)}겠는걸." ${withSubjectParticle(chapter.ally)} 입을 연다.`,
+    `${withSubjectParticle(chapter.ally)} ${withObjectParticle(scene.keyword)} 가리킨다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+    `"${withCopulaParticle(scene.keyword)}겠는걸. 서두르자." ${withSubjectParticle(chapter.ally)} 속삭인다.`,
+    `${withSubjectParticle(chapter.ally)} 끄덕인다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
+    `"이게 열쇠야. ${withCopulaParticle(scene.keyword)}겠는걸." ${withSubjectParticle(chapter.ally)} 말한다.`,
+    `${withSubjectParticle(chapter.ally)} 낮게 말한다. "${withCopulaParticle(scene.keyword)}겠는걸."`,
   ]
   return pick(lines, seed)
 }
@@ -278,8 +313,10 @@ function goalThreat(chapter: Chapter, number: number): string {
     `${chapter.goal}. ${withSubjectParticle(chapter.threat)} 보인다`,
     `${chapter.threat} 앞의 ${chapter.goal}`,
     `${chapter.goal}, ${withSubjectParticle(chapter.threat)} 쉬지 않는다`,
-    `${withSubjectParticle(chapter.threat)} 지나 ${chapter.goal}로`,
+    `${withSubjectParticle(chapter.threat)} 지나 ${withDirectionParticle(chapter.goal)} 향한다`,
     `${chapter.goal}. 그 전에 ${chapter.threat}`,
+    `${chapter.goal}. 다음 조각이 보인다. ${withSubjectParticle(chapter.threat)} 서두른다`,
+    `${chapter.goal}. ${withSubjectParticle(chapter.threat)} 기다린다`,
   ]
   return pick(lines, number)
 }
@@ -291,9 +328,9 @@ function hookLine(chapter: Chapter, scene: ArrivalScene, number: number): string
     `바게트가 손에서 따뜻해진다… 어딘가로 이끌고 있다.`,
     `…${chapter.bridge} 쪽으로 두 갈래 길이 보인다.`,
     `빛이 두 갈래로 갈라진다… 한쪽은 ${chapter.threat} 쪽이다.`,
-    `${chapter.ally}가 멈춰 선다. "…어디로?"`,
-    `! 서둘러야 한다. ${withObjectParticle(scene.keyword)} 놓치면 돌아올 수 없다.`,
-    `…${chapter.bridge}가 보인다. 발을 내딛는 순간이 온다.`,
+    `${withSubjectParticle(chapter.ally)} 멈춰 선다. "…어디로?"`,
+    `! 서둘러야 한다. 이 길을 놓치면 돌아올 수 없다.`,
+    `…${withSubjectParticle(chapter.bridge)} 보인다. 발을 내딛는 순간이 온다.`,
   ]
   return pick(h, number)
 }
