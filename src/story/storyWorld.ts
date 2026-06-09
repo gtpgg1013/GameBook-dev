@@ -120,8 +120,8 @@ function titleForScene(chapter: Chapter, scene: ArrivalScene, number: number): s
 }
 
 // ─── Scene builder — every scene reads like a real story paragraph ────────
-// Each generated page contains: action, keyword, ally, threat, goal, "겠는걸"
-// but woven into prose that feels authored, not assembled.
+// Each generated page contains: action, sensory detail, ally voice, pressure, reward, hook.
+// Builders weave chapter/scene data into varied prose — no single phrase repeats per page.
 
 function buildScene(chapter: Chapter, scene: ArrivalScene, number: number): string {
   const lead = firstPerson(scene.lead)
@@ -234,7 +234,7 @@ ${hookLine(chapter, scene, number)}`,
 function arrivalOpen(chapter: Chapter, scene: ArrivalScene): string {
   switch (scene.route) {
     case "front": return `${scene.action}. ${withSubjectParticle(chapter.threat)} 반응하고, ${chapter.location}의 길이 둘로 갈라진다.`
-    case "clue": return `${scene.action}. ${scene.keyword} 흔적이 ${withAndParticle(chapter.clue)} 이어진다.`
+    case "clue": return `${scene.action}. ${withSubjectParticle(scene.keyword)} 흔적이 바닥에 겹쳤다.`
     case "heart": return `${scene.action}. ${withSubjectParticle(chapter.ally)} 고개를 끄덕이고, ${chapter.goal}이 사람들의 일이 된다.`
     default: return assertNever(scene.route)
   }
@@ -278,7 +278,7 @@ function goalThreat(chapter: Chapter, number: number): string {
     `${chapter.goal}. ${withSubjectParticle(chapter.threat)} 보인다`,
     `${chapter.threat} 앞의 ${chapter.goal}`,
     `${chapter.goal}, ${withSubjectParticle(chapter.threat)} 쉬지 않는다`,
-    `${chapter.threat}을 지나 ${chapter.goal}로`,
+    `${withSubjectParticle(chapter.threat)} 지나 ${chapter.goal}로`,
     `${chapter.goal}. 그 전에 ${chapter.threat}`,
   ]
   return pick(lines, number)
@@ -286,23 +286,34 @@ function goalThreat(chapter: Chapter, number: number): string {
 
 function hookLine(chapter: Chapter, scene: ArrivalScene, number: number): string {
   const h = [
-    `…지금 결정해야 한다. ${scene.keyword} 앞에서 갈림길이 열린다.`,
-    `${withSubjectParticle(chapter.threat)} 가까워진다… 어느 쪽으로 발을 디뎌야 할까?`,
-    `바게트가 손에서 따뜻해진다… ${withSubjectParticle(scene.keyword)} 어떤 방향을 가리키고 있다.`,
-    `…${withSubjectParticle(scene.keyword)} 잡은 순간, ${chapter.bridge} 쪽으로 두 갈래 길이 보인다.`,
-    `${withSubjectParticle(scene.keyword)} 두 갈래로 빛난다… 한쪽은 ${chapter.threat}, 한쪽은 ${chapter.goal}.`,
-    `${chapter.ally}가 멈춰 선다… "${withCopulaParticle(scene.keyword)}겠는걸." 어디로?`,
-    `시간이 없다! ${withSubjectParticle(scene.keyword)} 희미해지기 전에 결정해야 한다.`,
-    `…${chapter.bridge}가 보인다. ${withObjectParticle(scene.keyword)} 놓치면 돌아올 수 없다.`,
+    `…지금 결정해야 한다. 갈림길이 열린다.`,
+    `숨이 막힌다… 어느 쪽으로 발을 디뎌야 할까?`,
+    `바게트가 손에서 따뜻해진다… 어딘가로 이끌고 있다.`,
+    `…${chapter.bridge} 쪽으로 두 갈래 길이 보인다.`,
+    `빛이 두 갈래로 갈라진다… 한쪽은 ${chapter.threat} 쪽이다.`,
+    `${chapter.ally}가 멈춰 선다. "…어디로?"`,
+    `! 서둘러야 한다. ${withObjectParticle(scene.keyword)} 놓치면 돌아올 수 없다.`,
+    `…${chapter.bridge}가 보인다. 발을 내딛는 순간이 온다.`,
   ]
   return pick(h, number)
 }
 
 function memoryLine(chapter: Chapter, number: number): string {
   const ci = chapters.indexOf(chapter)
-  if (ci <= 0) return "편의점에서 바게트가 따뜻했던 그 순간이 스친다."
+  if (ci <= 0) {
+    const memos = [
+      "편의점에서 바게트가 따뜻했던 그 순간이 스친다.",
+      "계산대 위에서 빵이 숨을 쉬던 느낌이 아직 손에 남아 있다.",
+      "어두운 방바닥이 무너지던 그 밤이 겹쳐 보인다.",
+    ]
+    return pick(memos, number)
+  }
   const prev = chapters[ci - 1]?.arc ?? chapter.arc
-  return `지나온 ${prev}의 기억이 발밑에서 아직 가라앉지 않았다.`
+  const memos = [
+    `지나온 ${prev}의 기억이 발밑에서 아직 가라앉지 않았다.`,
+    `${prev}에서 들었던 소리가 귀에 맴돈다.`,
+  ]
+  return pick(memos, number)
 }
 
 function firstPerson(copy: string): string {
